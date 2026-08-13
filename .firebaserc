@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "contamas",
+    "contamas": "contamas-cde21"
+  },
+  "targets": {},
+  "etags": {}
+}

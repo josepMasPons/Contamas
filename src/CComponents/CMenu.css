@@ -1,0 +1,112 @@
+.BtablaP2 {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table-responsiveP2{
+    max-height: 200px; /* Límit d'alçada per activar scroll */
+    overflow-y: auto; /* Permet scroll vertical */
+    overflow-x: hidden; /* Permet scroll horitzontal */
+    border: 1px solid #ccc; /* Marc al voltant per millor visualització */
+    padding: 5px;
+}
+.BTablaP2-temp  {
+ width: 8px;
+ } 
+ .BTablaP2-nom  {
+ width: 120px;
+ } 
+.BTablaP2-nomz  {
+ width: 200px;
+ } 
+.BTablaP2-nom0  {
+ width: 8px;
+ } 
+.BTablaP2-nom1  {
+ width: 30px;
+ }
+ .BTablaP2-nom2  {
+ width: 120px;
+ }
+ .BTablaP2-nom3  {
+ width: 200px;
+ } 
+.BtablaP2 th, .BtablaP2 td {
+    border: 2px solid #ddd; /* Afegeix una quadricula */
+    padding: 2px;
+    text-align: left;
+}
+.BtablaP2 thead {
+    background-color: #f8f9fa; /* Fons clar per destacar les capçaleres */
+    font-weight: bold;
+}
+.BtablaP2 tbody tr:hover {
+    background-color: #f1f1f1; /* Canvi de color en passar per sobre */
+}
+.PP01 {
+    clear: initial;
+    text-align: center;
+    width: 100%; 
+    max-width: 400px; 
+    padding: 5px;
+    background-color: #99c9ff; 
+    border-radius: 5px;
+    border: 5px solid white;
+    text-align: center;
+    margin:auto;
+    min-height: 250px;   /* mínim */
+    height: auto;        /* creix automàticament */
+  }  
+
+.PP01-header1 {
+      height: auto;   
+     
+      background-color: #bbbdc1;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      justify-content: flex-start;
+      font-size: calc(10px + 2vmin);
+      color: white;
+      padding: 1ch;
+    
+    } 
+    .PP01-header2 {
+      height:175px;
+      background-color: #dfe1e4;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
+      margin: 1px;
+    } 
+.PP01-header3 {
+   
+      background-color: #bbbdc1;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
+      padding: 5px; 
+      min-height: 100px;   /* mínim */
+      height: auto;    
+    } 
+ .PP01-header4 {
+      height:120px;
+      background-color: #dfe1e4;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
+      margin: 5px;
+    } 
