@@ -6,10 +6,10 @@ import "./CconsultaCB.css";
 import {db } from '../firebaseLoc';
 
 import { findAllByTestId } from '@testing-library/react';
-import {exportarPDF} from '../Backups/ExportarPDF';
+import {exportarPDF} from '../CCGlobal/ExportarPDF';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import Benrera from '../Backups/Benrera';
+import Benrera from '../CCGlobal/Benrera';
  
 function CconsultaCB() { 
   const navigate=useNavigate();

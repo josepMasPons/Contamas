@@ -1,7 +1,7 @@
 import { Card, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { translateText } from "../CCGlobal/Ctranslator";
+import { translateText } from "./Ctranslator.js";
 import Benrera from './Benrera.js';
 function JMCopyRight() {
   const navigate = useNavigate();

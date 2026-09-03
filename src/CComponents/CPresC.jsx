@@ -4,8 +4,8 @@ import { Container,Row,Col,Card,Button} from "react-bootstrap";
 import { query,where,getDocs,collection} from "firebase/firestore";
 import { db } from "../firebaseLoc";
 import "./CPresC.css";
-import { exportarPDF } from "../Backups/ExportarPDF";
-import Benrera from '../Backups/Benrera';
+import { exportarPDF } from "../CCGlobal/ExportarPDF";
+import Benrera from '../CCGlobal/Benrera';
 // ============================================================
 // COMPONENT
 // ============================================================

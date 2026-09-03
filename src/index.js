@@ -23,14 +23,14 @@ import CPresB    from './CComponents/CPresB';
 import CmovsCB    from './CComponents/CmovsCB';
 import Canalis    from './CComponents/Canalis'; 
 
-import JMTermsConditions  from './Backups/CTermsConditions';
-import JMCopyRight        from './Backups/CCopyRight';
-import CBackup             from './Backups/CBackup';
-import Importacio         from './Backups/Importacio';
-import Exportacio         from './Backups/Exportacio';
-import Coleccions         from './Backups/Coleccions';
-import CVersio             from './Backups/CVersio';
-import CPermisos             from './Backups/CPermisos'; 
+import JMTermsConditions  from './CCGlobal/CTermsConditions';
+import JMCopyRight        from './CCGlobal/CCopyRight';
+import CBackup             from './CCGlobal/CBackup';
+import Importacio         from './CCGlobal/Importacio';
+import Exportacio         from './CCGlobal/Exportacio';
+import Coleccions         from './CCGlobal/Coleccions';
+import CVersio             from './CCGlobal/CVersio';
+import CPermisos             from './CCGlobal/CPermisos'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

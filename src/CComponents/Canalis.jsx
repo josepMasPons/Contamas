@@ -5,7 +5,7 @@ import {query,where,getDocs,collection} from "firebase/firestore";
 import {Container, Card,Button,Row,Col} from "react-bootstrap";
 import {ResponsiveContainer,BarChart,Bar,PieChart,Pie,Cell,
         LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,Legend} from "recharts";
-import Benrera from "../Backups/Benrera.js";
+import Benrera from "../CCGlobal/Benrera.js";
 export default function Canalis() {
   const navigate = useNavigate();
   const location = useLocation();

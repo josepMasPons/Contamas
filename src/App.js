@@ -1,11 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from "react";
 import { useNavigate , useLocation} from 'react-router-dom';
-import Versio  from "./Backups/CVersio";
+import Versio  from "./CCGlobal/CVersio";
  
 function App() {
-  const [missatge,setMissatge] = useState('');
-  const location = useLocation();
+
   const navigate = useNavigate();
 
   useEffect(() => { 

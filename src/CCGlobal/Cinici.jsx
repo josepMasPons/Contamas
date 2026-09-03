@@ -15,7 +15,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import userEvent from '@testing-library/user-event';
 import { translateText } from "./Ctranslator";
-import Benrera from '../Backups/Benrera.js';
+import Benrera from '../CCGlobal/Benrera.js';
 
 function Pinici({ canviarPantalla }) {
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
@@ -35,7 +35,6 @@ function Pinici({ canviarPantalla }) {
    const [selected, setSelected] = useState([languages[0]]);
    const [open, setOpen] = useState(false);    
    const ref = useRef(null);
-   const [codi, setCodi] = useState('');  
    const [pregunta, setPregunta] = useState('Quin aniversari vam cel.lebrar el 2025 a París?');  
    const [resposta, setResposta] = useState('50'); 
    const [preguntat, setPreguntat] = useState([]);  
@@ -58,10 +57,8 @@ function Pinici({ canviarPantalla }) {
    const inputRef = useRef(null);
    const [data, setData] = useState([]); 
    const [email, setEmail] = useState('');
-  const [emailP, setEmailP] = useState('');
   const [emailError, setEmailError] = useState("");
-  const [emailErrorP, setEmailErrorP] = useState("");
-  const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(true);
   const [iniciJMP, setIniciJMP] = useState(localStorage.getItem('IniciJMP') || 'Si');
  
 
@@ -474,7 +471,9 @@ function Pinici({ canviarPantalla }) {
                   backgroundColor: "rgba(255,255,255,0.2)"
                   }}>                    
                 <h2 className="PP01-link2f">Gestió comptable</h2>
-                <h2 className="PP01-link2b">Multifamiliar, pensada per l'economia domèstica</h2> 
+                <h2 className="PP01-link2b">MultiEmpresa, pla comptable personalitzat ...</h2> 
+                <h2 className="PP01-link2b">adaptada per l'economia domèstica</h2> 
+                <h2 className="PP01-link2b">             associacions i ONG's</h2>
               </div>  
    
           </header> 

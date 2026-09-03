@@ -5,8 +5,8 @@ import { Navbar, Container, Row, Nav, Col, Card, Button } from "react-bootstrap"
 import { collection, getDocs } from 'firebase/firestore';
 import "./CmovsCB.css";
 import {db } from '../firebaseLoc';
-import {exportarPDF} from '../Backups/ExportarPDF';
-import Benrera from '../Backups/Benrera';
+import {exportarPDF} from '../CCGlobal/ExportarPDF';
+import Benrera from '../CCGlobal/Benrera';
 
 function CconsultaCB() { 
   const navigate=useNavigate(); 

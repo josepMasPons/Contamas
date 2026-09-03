@@ -5,7 +5,7 @@ import "./CPermisos.css";
 import { ref as refCar, listAll, getDownloadURL, uploadBytesResumable } from 'firebase/storage'; 
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {storageCar, db } from '../firebaseLoc'; 
+import {storageCar, db } from '../firebaseLoc.js'; 
 import { doc, updateDoc, 
           getDoc, setDoc,
           getDocs, collection, 

@@ -5,7 +5,7 @@ import { storageCar, db } from '../firebaseLoc.js';
 import { doc, setDoc, getDoc, query, where, getDocs, writeBatch, collection } from 'firebase/firestore';
 import "./Cmovs.css";
 import { Csaldos } from "../CCGlobal/Csaldos.js";
-import Benrera from "../Backups/Benrera.js";
+import Benrera from "../CCGlobal/Benrera.js";
 
 function Cmovs() {
   const navigate=useNavigate();

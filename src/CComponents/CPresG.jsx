@@ -4,7 +4,7 @@ import { Navbar, InputGroup, Container, Row, Col,Nav, Card, Form, Button } from 
 import { storageCar, db } from '../firebaseLoc.js';
 import { doc, setDoc, getDoc, query, where, getDocs, writeBatch, collection } from 'firebase/firestore';
 import "./Cmovs.css";
-import Benrera from '../Backups/Benrera';
+import Benrera from '../CCGlobal/Benrera.js';
 function CPresG() {
   const navigate=useNavigate();  
   const [grupC, setGrupC] = useState([]); 

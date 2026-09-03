@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs , getFirestore} from "firebase/firestore"; 
-import { db } from "../firebaseLoc";
+import { db } from "../firebaseLoc.js";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { emoji } from "./emoji";

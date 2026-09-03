@@ -6,7 +6,7 @@ import { doc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase
 import "./Ccomptes.css";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import Benrera from '../Backups/Benrera.js';
+import Benrera from '../CCGlobal/Benrera.js';
 
 function Ccomptes() {
   const navigate=useNavigate();

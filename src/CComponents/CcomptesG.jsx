@@ -8,7 +8,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import Benrera from "../Backups/Benrera.js";
+import Benrera from "../CCGlobal/Benrera.js";
 
 function CcomptesG() {
   const [pr, setPr] = useState(localStorage.getItem('CcomptesG'));   

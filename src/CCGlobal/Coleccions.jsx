@@ -1,11 +1,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../firebaseLoc";
+import { db } from "../firebaseLoc.js";
 import { collection, writeBatch, doc, getDocs, } from 'firebase/firestore';
 import { Button } from "react-bootstrap";
 import Papa from 'papaparse';
-import { emoji } from "./emoji";
+import { emoji } from "./emoji.js";
 import Benrera from './Benrera.js';
 
 const Coleccions = () => {

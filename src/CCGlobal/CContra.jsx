@@ -9,7 +9,7 @@ import { doc, updateDoc,
           getDocs, collection,          
           limit  } from 'firebase/firestore'; 
 import { useNavigate } from 'react-router-dom';
-import Benrera from '../Backups/Benrera';
+import Benrera from '../CCGlobal/Benrera';
  
 
 export default function JMContra() {

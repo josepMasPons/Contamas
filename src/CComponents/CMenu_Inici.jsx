@@ -4,7 +4,7 @@ import { Navbar, Container, Row, Col,Nav, Card, Form, Button } from "react-boots
 import { doc, setDoc, getDoc, query, where, getDocs, writeBatch, collection } from 'firebase/firestore';
 import { storageCar, db } from '../firebaseLoc.js';
 import "./CMenu.css";
-import Benrera from "../Backups/Benrera.js";
+import Benrera from "../CCGlobal/Benrera.js";
 
 function CMenu_Inici() {
   const navigate=useNavigate();

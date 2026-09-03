@@ -3,7 +3,7 @@
 
   revisar que useRef  estigui cridat de react
 
-  import {exportarPDF} from '../Backups/ExportarPDF';
+  import {exportarPDF} from '../CCGlobal/ExportarPDF';
  
   const pdfRef = useRef();
 
