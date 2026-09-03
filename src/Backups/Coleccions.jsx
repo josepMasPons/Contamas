@@ -6,6 +6,7 @@ import { collection, writeBatch, doc, getDocs, } from 'firebase/firestore';
 import { Button } from "react-bootstrap";
 import Papa from 'papaparse';
 import { emoji } from "./emoji";
+import Benrera from './Benrera.js';
 
 const Coleccions = () => {
   const navigate=useNavigate();
@@ -106,9 +107,11 @@ useEffect(() => {
     }
   };
   fetchColeccio();
-   }, []);
-
- 
+   }, []);  
+   function Sacabat() {     
+     navigate('/CBackup');
+  }
+   Benrera(Sacabat);
   return (
     <div>
        
@@ -119,7 +122,7 @@ useEffect(() => {
                     className="mb-2"
                     variant="warning"
                     size="sm"
-                    onClick={() => navigate("/CBackup")}
+                    onClick={Sacabat}
                   >
                          Final programa
                   </Button>

@@ -5,6 +5,7 @@ import { storageCar, db } from '../firebaseLoc.js';
 import { doc, setDoc, getDoc, query, where, getDocs, writeBatch, collection } from 'firebase/firestore';
 import "./Cmovs.css";
 import { Csaldos } from "../CCGlobal/Csaldos.js";
+import Benrera from "../Backups/Benrera.js";
 
 function Cmovs() {
   const navigate=useNavigate();
@@ -86,8 +87,6 @@ function Cmovs() {
       if (DH === 'H') {setSaldoH(saldo)}
       //console.log(saldo);
   };
-
-   // useEffect per anular buto retorn mòbil *********************
   useEffect(() => {
       if  (tipusM === 'A') {setTipusMM('Totes')}
       if  (tipusM === 'I') {setTipusMM('Ingrés')} 
@@ -96,28 +95,6 @@ function Cmovs() {
       if  (tipusM === 'X') {setTipusMM('Tancament/Apertura')}
      
    }, [tipusM]);
-// programa standard per buto triangle android ---------------
-  const programa = 'Cmenu_Inici.jsx';   
-  useEffect(() => {
-  const handleBack = () => {
-    Sacabat();
-
-    // Manté la pàgina dins de l'historial
-    window.history.pushState(null, "", window.location.href);
-  };
-
-  // Creem una entrada inicial
-  window.history.pushState(null, "", window.location.href);
-
-  window.addEventListener("popstate", handleBack);
-
-  return () => {
-    window.removeEventListener("popstate", handleBack);
-  };
-}, []);
-// final programa standard ---------------------------------
- // useEffect per anular buto retorn mòbil *********************
-
   useEffect(() => {
      const dataM = new Date();
      setXM06(`${dataM.getDate()}/${dataM.getMonth()+1}
@@ -289,10 +266,8 @@ function Cmovs() {
        navigate('/CconsultaC');
   }  
 
- 
 const BuscarOrigen = (valor) => {
-     setXM02(valor);
-   
+     setXM02(valor); 
  
      //console.log('origen ----------',valor)
      const registre = compteD.find(
@@ -445,80 +420,7 @@ const BuscarOrigen = (valor) => {
 
   fetchData3();
 }, [compteC, grupC]);
-/*
-   useEffect(() => { 
-  const fetchData3 = async () => {
-    const linksCollection = collection(db, 'CompteD');
-        where('D00', '==', 'xM00')
 
-     try {
-      const querySnapshot = await getDocs(linksCollection);
-      const linksData = querySnapshot.docs.map((docSnap) => {
-        const data = docSnap.data();
-        // Buscar coincidència a grupC
-        const grup1 = grupC.find(g => g.G01 === data.D03);
-        // Buscar coincidència a compteC
-        const grup2 = compteC.find(
-          g => g.C03 === data.D03 && g.C01 === data.D04
-        );
-        return {
-          id: docSnap.id,
-          D00: data.D00,
-          D01: data.D01,
-          D02: data.D02,
-          D03: data.D03,
-          D04: data.D04,
-          D05: data.D05,
-          D10: grup1?.G03 || "",
-          D11: grup1?.G02 || "",
-          D12: grup2?.C02 || "",
-          D51: grup2?.C51 || "",
-          D52: grup2?.C52 || "",
-          ...data,
-        };
-      });
-      setCompteD(linksData);
-    } catch (error) {
-      console.error('Error llegint CompteD: ', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchData3();
-}, [compteC, grupC]);
-  //   *********  buscar el `periode comptable  ******
-
-useEffect(() => {
-  const fetchNordre = async () => {
-    try {
-      const linksCollection = collection(db, 'MovsG');
-      const querySnapshot = await getDocs(linksCollection);
-
-      let maxM01 = 10000;
-
-      querySnapshot.docs.forEach(doc => {
-        const data = doc.data();
-
-        const m01Value = parseInt(data.M01, 10);
-
-        if (!isNaN(m01Value) && m01Value > maxM01) {
-          maxM01 = m01Value;
-        }
-      });
-
-      setXM01(maxM01 + 5);
-
-    } catch (error) {
-      console.error('Error llegint M01:', error);
-      setXM01(10000);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchNordre();
-}, [xM00,sivalidar]);
-*/
 useEffect(() => {
   const fetchNordre = async () => {
     try {
@@ -589,7 +491,8 @@ useEffect(() => {
 
 function Consulta() {     
     navigate('/CMovsC');
-  }  
+}
+Benrera(Sacabat);  
   return (    
     <div>  
      <Card.Header className="d-flex 

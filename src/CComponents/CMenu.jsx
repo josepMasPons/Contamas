@@ -10,6 +10,7 @@ import { findAllByTestId } from '@testing-library/react';
 import {exportarPDF} from '../Backups/ExportarPDF';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import Benrera from "../Backups/Benrera.js";
 
 function CMenu() {
   const navigate=useNavigate();
@@ -126,30 +127,6 @@ function CMenu() {
       .filter(item => item.G03 === "P")
       .reduce((sum, item) => sum + Number(item.G05 || 0), 0);
     const totalPassiu = totalPassiuP + totalPassiuMov;
-
-  const [logoR, setLogoR] = useState('');
-  
-   // programa standard per buto triangle android ---------------
-     const programa = 'Cmenu_Inici.jsx';   
-     useEffect(() => {
-     const handleBack = () => {
-       Sacabat();
-   
-       // Manté la pàgina dins de l'historial
-       window.history.pushState(null, "", window.location.href);
-     };
-   
-     // Creem una entrada inicial
-     window.history.pushState(null, "", window.location.href);
-   
-     window.addEventListener("popstate", handleBack);
-   
-     return () => {
-       window.removeEventListener("popstate", handleBack);
-     };
-   }, []);
-   // final programa standard ---------------------------------
- 
 useEffect(() => {
   if (sipre === "No") return;
 
@@ -520,7 +497,6 @@ useEffect(() => {
   }  
    function Comparar() {     
     navigate('/CPresC');
-    /******************************************************************************************* */
   }  
   const exportar_a_PDF = async () => {
        const dataM = new Date();
@@ -530,6 +506,7 @@ useEffect(() => {
     };
     generar();
   };
+  Benrera(Sacabat);
   return (   
     <div>  
      <Card.Header className="d-flex 

@@ -13,6 +13,7 @@ import { doc, updateDoc,
           limit  } from 'firebase/firestore'; 
 import { deleteObject } from 'firebase/storage'; 
 import { useNavigate } from 'react-router-dom';
+import Benrera from './Benrera.js';
  
 export default function JMAltaKey() {
   const navigate=useNavigate();
@@ -239,22 +240,7 @@ useEffect(() => {
 
   fetchAllMediaI();
 }, []);
-   //  *****   use efect per anular retorn de tecles ****
-   useEffect(() => {  
-      const anularReturn = (event) => {
-         event.preventDefault();
-         if (window.history.state && 
-             window.history.state.preventExit) {
-              navigate(0);
-          }
-      } 
-      window.history.pushState({preventExit: true},'');
-      window.addEventListener('popstate',anularReturn);
-      return () => {
-         window.removeEventListener('popstate',anularReturn);
-         window.history.replaceState(null,'');
-      }
-  }, [navigate]);
+ Benrera(Sacabat); 
   return ( 
     <> 
       

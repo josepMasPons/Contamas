@@ -32,6 +32,7 @@
   ********************  fi  dossier ************************ */
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+ 
 
 export const exportarPDF = async (element,nomFitxer = "document") => {
   console.log('inici exportarPDF - ',element,' - ')

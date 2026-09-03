@@ -15,7 +15,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import userEvent from '@testing-library/user-event';
 import { translateText } from "./Ctranslator";
- 
+import Benrera from '../Backups/Benrera.js';
+
 function Pinici({ canviarPantalla }) {
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
     const navigate = useNavigate();
@@ -23,30 +24,17 @@ function Pinici({ canviarPantalla }) {
     let Versio02 = localStorage.getItem('Versio02');
     let Versio03 = localStorage.getItem('Versio03');
 
-    const languages = [
+   const languages = [
       { code: "ca", name: "Català", flag: "🇨🇦" },
       { code: "en", name: "English", flag: "🇬🇧"},
       { code: "es", name: "Castellà", flag: "🇪🇸"},
       { code: "fr", name: "Français", flag: "🇫🇷"},
       { code: "de", name: "Deutsch", flag: "🇩🇪"}, 
       ];
-      const idioma = localStorage.getItem("Idioma") || languages[0].flag;
-      const [selected, setSelected] = useState([languages[0]]);
-    
-      const [open, setOpen] = useState(false);    
-      const ref = useRef(null);
-
- //    const [result, setResult] = useState("");
- //    const handleTranslate = async () => {
- //          const translated = await translateText(
- //               "Hola món",
- //               "ca",
-  //              "en"
-  //        );
- //         setResult(translated);
- //    };
-  
-   // const [logoR, setLogoR] = useState('');  
+   const idioma = localStorage.getItem("Idioma") || languages[0].flag;
+   const [selected, setSelected] = useState([languages[0]]);
+   const [open, setOpen] = useState(false);    
+   const ref = useRef(null);
    const [codi, setCodi] = useState('');  
    const [pregunta, setPregunta] = useState('Quin aniversari vam cel.lebrar el 2025 a París?');  
    const [resposta, setResposta] = useState('50'); 
@@ -150,10 +138,8 @@ function Pinici({ canviarPantalla }) {
   };
 
   BuscarFamilia();
-}, []);
-
-
-    useEffect(() => {   
+  }, []);
+  useEffect(() => {   
       const buscarpreguntes = async () => {
         const linksCollection = collection(db, 'Preguntes');
         const qX = query(linksCollection);
@@ -207,7 +193,7 @@ function Pinici({ canviarPantalla }) {
    const Enrera = () => {
     navigate('/');
   };
-  const sacabat = () => {
+  const Sacabat = () => {
     localStorage.setItem('IniciJMP', 'Si');  
     localStorage.setItem('AdminFam', 'No');
     localStorage.setItem('NomJ', '');
@@ -328,6 +314,7 @@ function Pinici({ canviarPantalla }) {
  
   const checkIfEmailExists = (email) => 
         data.some(item => item.mail === email);
+  Benrera(Sacabat);
   return (  
       <div>         
         <div className="PP01"> 
@@ -573,7 +560,7 @@ function Pinici({ canviarPantalla }) {
            
                    <Cbuto 
                            name="Sortir" 
-                           onClick={sacabat}
+                           onClick={Sacabat}
                            nLogo='3'                             
                            
                    /> 

@@ -8,6 +8,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
+import Benrera from '../Backups/Benrera.js';
 
 function CcomptesC() {
  // const {pr} = useParams();
@@ -42,8 +43,6 @@ function CcomptesC() {
   //const [text2, setText2] = useState(localStorage.getItem('Proces052') || '');
   const [administrador, setAdministrador]
                           = useState(localStorage.getItem('AdminFam') || ''); 
-
-  const [logoR, setLogoR] = useState('');
 
   const ajudaTipus = (
   <Popover id="popover-tipus">
@@ -81,27 +80,6 @@ const ajudaH= (
   </Popover>
 );
 
-   // programa standard per buto triangle android ---------------
-  const programa = 'Cmenu_Inici.jsx';   
-  useEffect(() => {
-  const handleBack = () => {
-    Sacabat();
-
-    // Manté la pàgina dins de l'historial
-    window.history.pushState(null, "", window.location.href);
-  };
-
-  // Creem una entrada inicial
-  window.history.pushState(null, "", window.location.href);
-
-  window.addEventListener("popstate", handleBack);
-
-  return () => {
-    window.removeEventListener("popstate", handleBack);
-  };
-}, []);
-// final programa standard ---------------------------------
-   
   async function Validar()  {
    if (codiCompteC !== '' && nomCompteC !== '' && codiGrup !== '') {
         const docRef2 = doc(db, 'CompteG', empresa+'_' +
@@ -230,7 +208,7 @@ const ajudaH= (
       };
       fetchData2();
     }, [showAvis]);
-  
+  Benrera(Sacabat);
   return (    
     <div>  
      <Card.Header className="d-flex 

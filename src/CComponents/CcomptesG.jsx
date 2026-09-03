@@ -8,6 +8,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
+import Benrera from "../Backups/Benrera.js";
 
 function CcomptesG() {
   const [pr, setPr] = useState(localStorage.getItem('CcomptesG'));   
@@ -51,29 +52,6 @@ function CcomptesG() {
   const [administrador, setAdministrador]
                           = useState(localStorage.getItem('AdminFam') || ''); 
 
-  const [logoR, setLogoR] = useState('');
-  // programa standard per buto triangle android ---------------
-  const programa = 'Cmenu_Inici.jsx';
-     
-  useEffect(() => {
-  const handleBack = () => {
-    Sacabat();
-
-    // Manté la pàgina dins de l'historial
-    window.history.pushState(null, "", window.location.href);
-  };
-
-  // Creem una entrada inicial
-  window.history.pushState(null, "", window.location.href);
-
-  window.addEventListener("popstate", handleBack);
-
-  return () => {
-    window.removeEventListener("popstate", handleBack);
-  };
-}, []);
-// final programa standard ---------------------------------
- 
   async function Validar()  {
     if (codiGrup !== '' && nomGrup !== '' && tipus !== '') {
         //console.log('Grabar GrupC - ',codiGrup , ' - ', nomGrup , ' - ',tipus);
@@ -158,9 +136,8 @@ function CcomptesG() {
         }
       };
       fetchData1();
-    }, [showAvis]);
-  
-   
+    }, [showAvis]);  
+  Benrera(Sacabat); 
   return (    
     <div>  
      <Card.Header className="d-flex 

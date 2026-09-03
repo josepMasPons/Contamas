@@ -4,6 +4,7 @@ import { db } from "../firebaseLoc";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { emoji } from "./emoji";
+import Benrera from './Benrera.js';
 
   const Exportacio = () => {
   const navigate = useNavigate();
@@ -140,8 +141,11 @@ const exportFirestore = async (collectionName) => {
   }
 };  
   //   ********************* fi proces **********************************   
-
-  return (
+function Sacabat() {     
+  navigate('/CBackup');
+}
+ Benrera(Sacabat);
+return (
     <>
      <div>      
           <div className="mt-3 text-center">
@@ -151,7 +155,7 @@ const exportFirestore = async (collectionName) => {
                     className="mb-2"
                     variant="warning"
                     size="sm"
-                    onClick={() => navigate("/Backup")}
+                    onClick={Sacabat}
                   >
                          Final programa
                   </Button>

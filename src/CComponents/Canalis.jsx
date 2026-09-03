@@ -5,7 +5,7 @@ import {query,where,getDocs,collection} from "firebase/firestore";
 import {Container, Card,Button,Row,Col} from "react-bootstrap";
 import {ResponsiveContainer,BarChart,Bar,PieChart,Pie,Cell,
         LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,Legend} from "recharts";
-
+import Benrera from "../Backups/Benrera.js";
 export default function Canalis() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -83,26 +83,7 @@ export default function Canalis() {
     fontWeight: "600",
     marginBottom: "15px"
   };
-  // programa standard per buto triangle android ---------------
-      const programa = 'Cmenu_Inici.jsx';   
-      useEffect(() => {
-      const handleBack = () => {
-        Sacabat();
-    
-        // Manté la pàgina dins de l'historial
-        window.history.pushState(null, "", window.location.href);
-      };
-    
-      // Creem una entrada inicial
-      window.history.pushState(null, "", window.location.href);
-    
-      window.addEventListener("popstate", handleBack);
-    
-      return () => {
-        window.removeEventListener("popstate", handleBack);
-      };
-    }, []);
-    // final programa standard ---------------------------------
+  
   function Sacabat() {
     navigate("/CMenu");
   }
@@ -134,7 +115,7 @@ export default function Canalis() {
      };
   });
     }, [apid]);
-  
+  Benrera(Sacabat);
   return (
     <div
       style={{

@@ -2,7 +2,7 @@ import { Card, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { translateText } from "../CCGlobal/Ctranslator";
-
+import Benrera from './Benrera.js';
 function JMCopyRight() {
   const navigate = useNavigate();
   let Versio01 = localStorage.getItem("Versio01");
@@ -25,9 +25,9 @@ function JMCopyRight() {
         t002: Versio05,  
         t003: Versio06,    
         b001:  "Enrera" 
- 
-  //  ---------------fi cams a traduir -------------------------------------    
+   //  ---------------fi cams a traduir -------------------------------------    
  };
+ 
    useEffect(() => {
      const traduir = async () => {
          if (idioma.toLowerCase() === "ca") {
@@ -50,7 +50,11 @@ function JMCopyRight() {
  // ------------------------------------------------------------------------------
  // ---------------------------  final  traductor --------------------------------
  // ------------------------------------------------------------------------------
-
+  
+  function Sacabat() {     
+    navigate('/Cinici');
+  }
+  Benrera(Sacabat);     
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Card className="shadow-lg p-4 text-center" style={{ maxWidth: "500px" }}>
@@ -69,7 +73,7 @@ function JMCopyRight() {
           <Button 
             className="mt-3" 
             variant="danger"             
-            onClick={() => navigate('/Cinici')}>
+            onClick={Sacabat}>
             {textes.b001}          
           </Button>
         </Card.Body>
@@ -77,5 +81,4 @@ function JMCopyRight() {
     </Container>
   );
 }
-
 export default JMCopyRight;

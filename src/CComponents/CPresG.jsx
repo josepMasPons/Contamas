@@ -4,25 +4,12 @@ import { Navbar, InputGroup, Container, Row, Col,Nav, Card, Form, Button } from 
 import { storageCar, db } from '../firebaseLoc.js';
 import { doc, setDoc, getDoc, query, where, getDocs, writeBatch, collection } from 'firebase/firestore';
 import "./Cmovs.css";
-import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
-import { Csaldos } from "../CCGlobal/Csaldos.js";
-
+import Benrera from '../Backups/Benrera';
 function CPresG() {
-  const navigate=useNavigate();
-
-  
+  const navigate=useNavigate();  
   const [grupC, setGrupC] = useState([]); 
   const [compteC, setCompteC] = useState([]); 
-  const [compteD, setCompteD] = useState([]); 
-  const [loading, setLoading] = useState(true);
-  
-  const [codiCompteC, setCodiCompteC] = useState('');
-  const [codiCompteD, setCodiCompteD] = useState('');
-
-  const [tipusM, setTipusM] = useState("A");
-  const [tipusMM, setTipusMM] = useState("Totes");
-  
+   
 //   *** codis per gravar a MovsC ****************
   const [xP00, setXP00] = useState(localStorage.getItem('Empresa')); // empresa ##
   const [xP01, setXP01] = useState(2000);  // any
@@ -49,22 +36,11 @@ function CPresG() {
   const [nomDesti, setNomDesti] = useState('');
   // ******************************* 
 
-  const [nomCompteC, setNomCompteC] = useState('');
-  const [nomCompteD, setNomCompteD] = useState('');  
-  
-  const [tipus, setTipus] = useState('');
-  const [notesD, setNotesD] = useState('');
-  const [sivalidar, setSivalidar] = useState(false); 
-  const [sivalidar2, setSivalidar2] = useState(false); 
-  const [sivalidar3, setSivalidar3] = useState(true); 
   const [saldo1, setSaldo1] = useState(0);
   const [saldo2, setSaldo2] = useState(0);
 
   const [nomJ, setNomJ] = useState(localStorage.getItem('NomJ') || '');
   //const [text2, setText2] = useState(localStorage.getItem('Proces052') || '');
-  const [administrador, setAdministrador]
-                          = useState(localStorage.getItem('AdminFam') || ''); 
-  
   const [periode,setPeriode] = useState(localStorage.getItem('Percon'));
  
  useEffect(() => {
@@ -108,7 +84,7 @@ useEffect(() => {
         } catch (error) {
           console.error('Error llegint grupC: ', error);
         } finally {
-          setLoading(false);
+     
         }
       };
       fetchData1();
@@ -142,30 +118,46 @@ useEffect(() => {
         } catch (error) {
           console.error('Error llegint CompteC: ', error);
         } finally {
-          setLoading(false);
+          
         }
       };
       fetchData2();
     }, [grupC]);
-  // useEffect per anular buto retorn mòbil *********************
-   useEffect(() => {
-    const anularReturn = (event) => {
-      event.preventDefault();
-    // 1.- evita que el butó enrera et tregui de l'aplicació
-      if (window.history.state && window.history.state.preventExit) {
-          navigate(0);
-      }
-    }
-    // 2.- afageix un estat al historial per no surtir directament
-    window.history.pushState({preventExit: true},'');
-    // 3.- Gestiona events del butó enrera
-    window.addEventListener('popstate',anularReturn);
-    // 4.- Neteja 
-    return () => {
-        window.removeEventListener('popstate',anularReturn);
-        window.history.replaceState(null,'');
-    }
-   }, [navigate]);
+       //   *********  llegir  compteC  i posarho a taula CompteC ******
+     useEffect(() => {
+      const fetchData2 = async () => {
+        const linksCollection = collection(db, 'CompteG');
+        try {
+          const querySnapshot = await getDocs(linksCollection);
+          const linksData = querySnapshot.docs.map(doc => ({
+            C00: doc.data().C00,
+            C01: doc.data().C01,
+            C02: doc.data().C02,
+            C03: doc.data().C03,
+            ...doc.data(),
+          }));
+          const filteredData = linksData
+            .filter((item) => item.C00 === xP00)
+            .map((item) => {
+             const grupTrobat = grupC.find(
+              (g) => (g.G01) === (item.C03)
+             );
+            return {
+              ...item,
+              G02:(grupTrobat?.G02 || ''),
+              G03:(grupTrobat?.G03 || ''),
+              };
+          });
+          setCompteC(filteredData);
+        } catch (error) {
+          console.error('Error llegint CompteC: ', error);
+        } finally {
+       
+        }
+      };
+      fetchData2();
+    }, [grupC]);
+ 
   useEffect(() => {
       const Csaldos = async () => {
       //  console.log('useeffect ... ')
@@ -331,8 +323,7 @@ useEffect(() => {
       setXP22(0);
   }
 }
-
- 
+ Benrera(Sacabat); 
   return (    
     <div>  
      <Card.Header className="d-flex 
@@ -968,16 +959,7 @@ useEffect(() => {
                                       
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      {sivalidar2 && ( 
-                   {/*   <Button className="mb-2" 
-                          variant="primary"
-                          size='sm'                      
-                          onClick={Validar2}>                             
-                          <i className="fas fa-sign-out-alt"></i>  Validar
-                      </Button>                                              
-                  */}
-                      )}   
-                 
+                    
                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <Button className="mb-2" 
                                variant="primary"

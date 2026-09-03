@@ -5,6 +5,7 @@ import { Navbar, Container, Row, Col,Nav, Card, Form, Button } from "react-boots
 import { doc, setDoc, getDoc, query, where, getDocs, writeBatch, collection } from 'firebase/firestore';
 import { storageCar, db } from '../firebaseLoc.js';
 import "./CmovsC";
+import Benrera from "../Backups/Benrera.js";
 
 function CconsultaC() {
   const navigate=useNavigate();
@@ -18,34 +19,12 @@ function CconsultaC() {
   const [peria, setPeria] = useState('');
   const [perim, setPerim] = useState('');
   const [logoR, setLogoR] = useState('');
-  // useEffect per dirigir auto màticament al invitats
   
- // programa standard per buto triangle android ---------------
-     const programa = 'Cmenu_Inici.jsx';   
-     useEffect(() => {
-     const handleBack = () => {
-       Sacabat();
-   
-       // Manté la pàgina dins de l'historial
-       window.history.pushState(null, "", window.location.href);
-     };
-   
-     // Creem una entrada inicial
-     window.history.pushState(null, "", window.location.href);
-   
-     window.addEventListener("popstate", handleBack);
-   
-     return () => {
-       window.removeEventListener("popstate", handleBack);
-     };
-   }, []);
-   // final programa standard ---------------------------------
- useEffect(() => {
+  useEffect(() => {
   const fetchPercon = async () => {
     try {
       const linksCollection = collection(db, 'PeriConta');
       const querySnapshot = await getDocs(linksCollection);
-
       const registre = querySnapshot.docs.find(
         doc => doc.data().PC00 === empresa
       );
@@ -66,12 +45,8 @@ function CconsultaC() {
   };
 
   fetchPercon();
-  
 }, []);
-  
- 
-  function Validar() {   
-     
+ function Validar() {   
     localStorage.setItem('Proces061', text1);
     localStorage.setItem('Proces062', text2);
     localStorage.setItem('Proces063', text3); 
@@ -80,8 +55,7 @@ function CconsultaC() {
   function Sacabat() {     
     navigate('/Cmovs');
   }  
- 
-  
+  Benrera(Sacabat); 
   return (
     <>
     <div className="center-contentP2">  

@@ -9,6 +9,8 @@ import { doc, updateDoc,
           getDocs, collection,          
           limit  } from 'firebase/firestore'; 
 import { useNavigate } from 'react-router-dom';
+import Benrera from '../Backups/Benrera';
+ 
 
 export default function JMContra() {
   const navigate=useNavigate();
@@ -74,23 +76,6 @@ useEffect(() => {
 
 }, [vcontra]);
 
-  useEffect(() => {
-      const anularReturn = (event) => {
-         event.preventDefault();
-         if (window.history.state && 
-             window.history.state.preventExit) {
-              navigate(0);
-          }
-      } 
-      window.history.pushState({preventExit: true},'');
-      window.addEventListener('popstate',anularReturn);
-      return () => {
-         window.removeEventListener('popstate',anularReturn);
-         window.history.replaceState(null,'');
-      }
-  }, [navigate]);
-
-  // verificar password antiga *******************
   const VContra = (event) => {
     setContraError('');
     const trimmedContra = (vcontra || '').trim(); 
@@ -155,7 +140,7 @@ useEffect(() => {
     localStorage.setItem('IniciJMP', 'No');
     navigate('/Cinici');
   } 
-  
+  Benrera(Sacabat);
   return ( 
     <>    
     <div>    

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Navbar, Container, Row, Nav, Col, Card, Button } from "react-bootstrap";
 import { emoji } from "./emoji";
+import Benrera from './Benrera.js';
 
 const Backup = () => {
   const navigate=useNavigate();

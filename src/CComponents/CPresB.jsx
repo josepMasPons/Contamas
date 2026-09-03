@@ -5,6 +5,7 @@ import { query,where,getDocs,collection} from "firebase/firestore";
 import { db } from "../firebaseLoc";
 import "./CPresC.css";
 import { exportarPDF } from "../Backups/ExportarPDF";
+import Benrera from "../Backups/Benrera";
 // ============================================================
 // COMPONENT
 // ============================================================
@@ -46,38 +47,6 @@ function CPresC() {
     setMesa('12' || "");
   }, [perdel, peral,percon]);
   // ==========================================================
-  // BOTÓ ENRERE DEL MÒBIL
-  // ==========================================================
-  useEffect(() => {
-    const anularReturn = (event) => {
-      event.preventDefault();
-      if (
-        window.history.state &&
-        window.history.state.preventExit
-      ) {
-        navigate(0);
-      }
-    };
-    window.history.pushState(
-      { preventExit: true },
-      ""
-    );
-    window.addEventListener(
-      "popstate",
-      anularReturn
-    );
-    return () => {
-      window.removeEventListener(
-        "popstate",
-        anularReturn
-      );
-      window.history.replaceState(
-        null,
-        ""
-      );
-    };
-  }, [navigate]);
-  // ==========================================================
   // LLEGIR COMPTEG
   // ==========================================================
   useEffect(() => {
@@ -113,130 +82,6 @@ function CPresC() {
     };
     fetchCompteC();
   }, [empresa]);
-  /*
-  // ==========================================================
-  // LLEGIR MOVSG
-  // ==========================================================
-  useEffect(() => {
-    //console.log('periode - ',any,mesd,mesa);
-    const fetchMoviments = async () => {
-    // if (!empresa || !any || !mes) {
-    //    setMovspr([]);
-    //    return;
-    //  }
-      try {
-        const q = query(
-          collection(db, "MovsG"),
-          where("M00","==", empresa),
-          where("M07",">=",`${any}/${mesd}`),
-          where("M07","<=",`${any}/${mesa}`)
-        );
-        const querySnapshot =
-          await getDocs(q);
-        // ====================================================
-        // OBJECTE D'ACUMULACIÓ
-        // ====================================================
-        const comptes = {};
-        // ====================================================
-        // FUNCIÓ ACUMULAR
-        // ====================================================
-        const acumulaC = (grup,compte,importMovz,mesz) => {
-          if (!grup || !compte) {
-            return;
-          }
-          // IMPORTANT:
-          // mateixa estructura que PresG.P02
-          //
-          // Exemple:
-          // "43.100"
-          //
-          const key =`${grup}.${compte}`;
-            // Si no existeix el compte,
-            // el creem.
-          if (!comptes[key]) {
-              comptes[key] = {comptes: key,import: 0,
-              R11: 0, R12: 0,R13: 0,R14: 0,R15: 0, R16: 0, R17: 0,
-              R18: 0, R19: 0,R20: 0,R21: 0,R22: 0, R23: 0};
-          }
-          // ==================================================
-          // TOTAL
-          // ==================================================
-          comptes[key].import +=importMovz;
-          comptes[key].R23 +=importMovz;
-          // ==================================================
-          // MES
-          // ==================================================
-          switch (mesz) {
-            case "01": comptes[key].R11 += importMovz;
-            break;
-            case "02": comptes[key].R12 += importMovz;
-            break;
-            case "03": comptes[key].R13 += importMovz;
-            break;
-            case "04": comptes[key].R14 += importMovz;
-            break;
-            case "05": comptes[key].R15 += importMovz;
-            break;
-            case "06": comptes[key].R16 += importMovz;
-            break;
-            case "07": comptes[key].R17 += importMovz;
-            break;
-            case "08": comptes[key].R18 += importMovz;
-            break;
-            case "09": comptes[key].R19 += importMovz;
-            break;
-            case "10": comptes[key].R20 += importMovz;
-            break;
-            case "11": comptes[key].R21 += importMovz;
-            break;
-            case "12": comptes[key].R22 += importMovz;
-            break;
-            default:
-             break;
-          }
-        };
-        // ====================================================
-        // RECORREM MOVSG
-        // ====================================================
-        querySnapshot.forEach((docSnap) => {
-          const dataM = docSnap.data();
-          const importMovz =  Number(dataM.M04) || 0;
-         // const [, mesz = ""] =  String(dataM.M07 || "").split(".");
-          const [, mesz = ""] = String(dataM.M07 || "").split("/");
-          // --------------------------------------------------
-          // COMPTE ORIGEN
-          // --------------------------------------------------
-          const [grupO = "", compteO = ""] = String(dataM.M02 || "").split(".");
-          // --------------------------------------------------
-          // COMPTE DESTÍ
-          // --------------------------------------------------
-          const [grupD = "", compteD = ""] = String(dataM.M03 || "").split(".");
-          // ==================================================
-          // ORIGEN positiu
-          // ==================================================
-          acumulaC(grupO,compteO,importMovz,mesz);
-          // ==================================================
-          // DESTÍ Negatiu
-          // ==================================================
-          acumulaC(grupD,compteD,-importMovz,mesz);
-        });
-        // ====================================================
-        // ARRAY FINAL
-        // ====================================================
-        const moviments =  Object.values(comptes);
-       // console.log( "=================================");
-       // console.log( "MOVIMENTS ACUMULATS:");
-       // console.log( moviments);
-       // console.log( "=================================");
-        setMovspr(moviments);
-      } catch (error) {
-        console.error("Error llegint MovsG:",error);
-        setMovspr([]);
-      }
-    };
-    fetchMoviments();
-  }, [empresa, any, mesd, mesa]);
-  */
   // ==========================================================
   // LLEGIR PRESSUPOST  //
   // Aquest useEffect depèn de:  //
@@ -449,9 +294,8 @@ function CPresC() {
   function Sacabat() {
     navigate("/CPresG");
   }
-
+  Benrera(Sacabat);
   // --------------------- return ----------
-
   return (
     <div className="P02b_center-contentP2">
       <Card.Header className="d-flex align-items-center justify-content-center

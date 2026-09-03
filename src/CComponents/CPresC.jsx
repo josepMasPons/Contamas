@@ -5,6 +5,7 @@ import { query,where,getDocs,collection} from "firebase/firestore";
 import { db } from "../firebaseLoc";
 import "./CPresC.css";
 import { exportarPDF } from "../Backups/ExportarPDF";
+import Benrera from '../Backups/Benrera';
 // ============================================================
 // COMPONENT
 // ============================================================
@@ -16,11 +17,6 @@ function CPresC() {
   // ==========================================================
   const [compteC, setCompteC] = useState([]);
   const [data, setData] = useState([]);
-  const [grupx] = useState(localStorage.getItem("Proces071") || "" );
-  const [paraulax] = useState(localStorage.getItem("Proces072") || "");
-  const [direct1] = useState( localStorage.getItem("Mapa99") || "");
-  const [directS] = useState(false);
-  const [filaSel] = useState(null);
   const [any, setAny] = useState("");
   const [mesd, setMesd] = useState("");
   const [mesa, setMesa] = useState("");
@@ -45,38 +41,7 @@ function CPresC() {
     setMesd(mesdd || "");
     setMesa(mesaa || "");
   }, [perdel, peral,percon]);
-  // ==========================================================
-  // BOTÓ ENRERE DEL MÒBIL
-  // ==========================================================
-  useEffect(() => {
-    const anularReturn = (event) => {
-      event.preventDefault();
-      if (
-        window.history.state &&
-        window.history.state.preventExit
-      ) {
-        navigate(0);
-      }
-    };
-    window.history.pushState(
-      { preventExit: true },
-      ""
-    );
-    window.addEventListener(
-      "popstate",
-      anularReturn
-    );
-    return () => {
-      window.removeEventListener(
-        "popstate",
-        anularReturn
-      );
-      window.history.replaceState(
-        null,
-        ""
-      );
-    };
-  }, [navigate]);
+  
   // ==========================================================
   // LLEGIR COMPTEG
   // ==========================================================
@@ -447,7 +412,7 @@ function CPresC() {
   function Sacabat() {
     navigate("/CMenu");
   }
-
+   Benrera(Sacabat);
   // --------------------- return ----------
 
   return (

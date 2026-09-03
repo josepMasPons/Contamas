@@ -4,10 +4,9 @@ import { Navbar, Container, Row, Col,Nav, Card, Form, Button } from "react-boots
 import { storageCar, db } from '../firebaseLoc.js';
 import { doc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import "./Ccomptes.css";
-import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
+import Benrera from '../Backups/Benrera.js';
 
 function Ccomptes() {
   const navigate=useNavigate();
@@ -118,30 +117,7 @@ const ajudaH= (
           }
         }
     }, [codiGrup,codiCompteC]);
-   
-  // programa standard per buto triangle android ---------------
-    const programa = 'Cmenu_Inici.jsx';   
-    useEffect(() => {
-    const handleBack = () => {
-      Sacabat();
-  
-      // Manté la pàgina dins de l'historial
-      window.history.pushState(null, "", window.location.href);
-    };
-  
-    // Creem una entrada inicial
-    window.history.pushState(null, "", window.location.href);
-  
-    window.addEventListener("popstate", handleBack);
-  
-    return () => {
-      window.removeEventListener("popstate", handleBack);
-    };
-  }, []);
-  // final programa standard ---------------------------------
-
- 
-   
+     
   async function Validar()  {
     
     if (codiCompteD !== '' && nomCompteD !== '') {
@@ -352,7 +328,7 @@ useEffect(() => {
       };
       fetchData3();
     }, [showAvis]);
-
+  Benrera(Sacabat);
   return (    
     <div>  
      <Card.Header className="d-flex 

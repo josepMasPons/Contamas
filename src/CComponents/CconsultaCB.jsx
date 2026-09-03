@@ -9,6 +9,7 @@ import { findAllByTestId } from '@testing-library/react';
 import {exportarPDF} from '../Backups/ExportarPDF';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import Benrera from '../Backups/Benrera';
  
 function CconsultaCB() { 
   const navigate=useNavigate();
@@ -32,27 +33,7 @@ function CconsultaCB() {
   const currentItems=data.slice(0, itemsPerPage);
   const emptyRows = itemsPerPage - currentItems.length;
   const paddedItems = [...currentItems, ...Array(emptyRows).fill({ temp: '.', nom: ' ', codi: 'empty' })];
- // programa standard per buto triangle android ---------------
-  const programa = 'Cmenu_Inici.jsx';   
-  useEffect(() => {
-  const handleBack = () => {
-    Sacabat();
-
-    // Manté la pàgina dins de l'historial
-    window.history.pushState(null, "", window.location.href);
-  };
-
-  // Creem una entrada inicial
-  window.history.pushState(null, "", window.location.href);
-
-  window.addEventListener("popstate", handleBack);
-
-  return () => {
-    window.removeEventListener("popstate", handleBack);
-  };
-}, []);
-// final programa standard ---------------------------------
-  
+ 
  useEffect(() => {
     const fetchData = async () => {
       const linksCollection = collection(db, 'CompteD');
@@ -190,7 +171,8 @@ function CconsultaCB() {
 };
 function Sacabat() {  
       navigate('/Ccomptes');
-      }   
+      }
+Benrera(Sacabat);   
 return (    
   <div className="P02b_center-contentP2">
     <Card.Header className="d-flex 

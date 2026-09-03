@@ -6,22 +6,17 @@ import { collection, getDocs } from 'firebase/firestore';
 import "./CmovsCB.css";
 import {db } from '../firebaseLoc';
 import {exportarPDF} from '../Backups/ExportarPDF';
+import Benrera from '../Backups/Benrera';
 
-import { findAllByTestId } from '@testing-library/react';
 function CconsultaCB() { 
   const navigate=useNavigate(); 
    const pdfRef = useRef();
-  const [grupC, setGrupC] = useState([]); 
   const [compteC, setCompteC] = useState([]); 
   const [compteD, setCompteD] = useState([]); 
-  const [xMovsG, setXMovsG] = useState([]);
   const [anyx, setAnyx] = useState(localStorage.getItem('Proces061') || '');
   const [mesx, setMesx] = useState(localStorage.getItem('Proces062') || '');
   const [paraulax, setParaulax] = useState(localStorage.getItem('Proces063') || '');
   const [data, setData] = useState([]);
-  const [direct1, setDirect1] = useState(localStorage.getItem('Mapa99') || '');
-  const [directS, setDirectS] = useState(false);
-  const [filaSel, setFilaSel] = useState(null);
   const [nomJ, setNomJ] = useState(localStorage.getItem('NomJ') || '');
   const [empresa, setEmpresa] = useState(localStorage.getItem('Empresa'));
   const removeAccents = (str) => {
@@ -31,29 +26,7 @@ function CconsultaCB() {
   const currentItems=data.slice(0, itemsPerPage);
   const emptyRows = itemsPerPage - currentItems.length;
   const paddedItems = [...currentItems, ...Array(emptyRows).fill({ temp: '.', nom: ' ', codi: 'empty' })];
- 
-// programa standard per buto triangle android ---------------
-    const programa = 'Cmenu_Inici.jsx';   
-    useEffect(() => {
-    const handleBack = () => {
-      Sacabat();
-  
-      // Manté la pàgina dins de l'historial
-      window.history.pushState(null, "", window.location.href);
-    };
-  
-    // Creem una entrada inicial
-    window.history.pushState(null, "", window.location.href);
-  
-    window.addEventListener("popstate", handleBack);
-  
-    return () => {
-      window.removeEventListener("popstate", handleBack);
-    };
-  }, []);
-  // final programa standard ---------------------------------
-  
- //   *********  llegir grupC  i posarho a taula grupC ******
+  //   *********  llegir grupC  i posarho a taula grupC ******
   const exportar_a_PDF = async () => {
       const dataM = new Date();
       const datae2 =  `${dataM.getDate()}/${dataM.getMonth()+1}/${dataM.getFullYear()}`; 
@@ -231,6 +204,7 @@ function CconsultaCB() {
     maximumFractionDigits: 0,
    });
 }; 
+Benrera(Sacabat);
   return (    
   <div className="P02b_center-contentP2">
     <Card.Header className="d-flex 

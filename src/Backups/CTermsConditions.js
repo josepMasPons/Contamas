@@ -2,6 +2,7 @@ import { Card, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { translateText } from "../CCGlobal/Ctranslator";
+import Benrera from './Benrera.js';
 
 function JMTermsConditions() {
   const navigate = useNavigate();
@@ -61,6 +62,11 @@ function JMTermsConditions() {
 // ------------------------------------------------------------------------------
 // ---------------------------  final  traductor --------------------------------
 // ------------------------------------------------------------------------------
+ 
+function Sacabat() {     
+  navigate('/Cinici');
+}
+Benrera(Sacabat);
 return (
   <>
       
@@ -106,7 +112,7 @@ return (
            </p>
           <hr />
           <div className="text-center">
-            <Button variant="danger" onClick={() => navigate('/Cinici')}>
+            <Button variant="danger" onClick={Sacabat}>
               {textes.b001}
             </Button>
           </div>

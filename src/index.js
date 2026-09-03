@@ -30,7 +30,6 @@ import Importacio         from './Backups/Importacio';
 import Exportacio         from './Backups/Exportacio';
 import Coleccions         from './Backups/Coleccions';
 import CVersio             from './Backups/CVersio';
-import CVisites             from './Backups/CVisites'; 
 import CPermisos             from './Backups/CPermisos'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -43,7 +42,6 @@ root.render(
         <Route path='/Cbuto'             element={<Cbuto/>} />
         <Route path='/CContra'           element={<CContra/>} />
         <Route path='/CVersio'           element={<CVersio />} />  
-        <Route path='/CVisites'          element={<CVisites />} /> 
         <Route path='/CPermisos'         element={<CPermisos/>} /> 
         <Route path='/Canalis'           element={<Canalis/>} /> 
    
