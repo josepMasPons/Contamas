@@ -128,25 +128,27 @@ function CMenu() {
     const totalPassiu = totalPassiuP + totalPassiuMov;
 
   const [logoR, setLogoR] = useState('');
-   // useEffect per anular buto retorn mòbil *********************
-   useEffect(() => {
-    const anularReturn = (event) => {
-      event.preventDefault();
-    // 1.- evita que el butó enrera et tregui de l'aplicació
-      if (window.history.state && window.history.state.preventExit) {
-          navigate(0);
-      }
-    }
-    // 2.- afageix un estat al historial per no surtir directament
-    window.history.pushState({preventExit: true},'');
-    // 3.- Gestiona events del butó enrera
-    window.addEventListener('popstate',anularReturn);
-    // 4.- Neteja 
-    return () => {
-        window.removeEventListener('popstate',anularReturn);
-        window.history.replaceState(null,'');
-    }
-   }, [navigate]);
+  
+   // programa standard per buto triangle android ---------------
+     const programa = 'Cmenu_Inici.jsx';   
+     useEffect(() => {
+     const handleBack = () => {
+       Sacabat();
+   
+       // Manté la pàgina dins de l'historial
+       window.history.pushState(null, "", window.location.href);
+     };
+   
+     // Creem una entrada inicial
+     window.history.pushState(null, "", window.location.href);
+   
+     window.addEventListener("popstate", handleBack);
+   
+     return () => {
+       window.removeEventListener("popstate", handleBack);
+     };
+   }, []);
+   // final programa standard ---------------------------------
  
 useEffect(() => {
   if (sipre === "No") return;
@@ -480,8 +482,7 @@ useEffect(() => {
     setPantalla('2')
   }  
   function Sacabat() {  
-   localStorage.setItem('IniciJMP', 'No');
-   
+   localStorage.setItem('IniciJMP', 'No');   
     navigate('/CMenu_Inici');
   }  
   function Ccomptes() {     

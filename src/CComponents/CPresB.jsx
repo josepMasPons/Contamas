@@ -42,8 +42,8 @@ function CPresC() {
     const [anydd,mesdd] = perdel.split("/");
     const [anyaa,mesaa] = peral.split("/");
     setAny(anyii || "");
-    setMesd(mesdd || "");
-    setMesa(mesaa || "");
+    setMesd('01' || "");
+    setMesa('12' || "");
   }, [perdel, peral,percon]);
   // ==========================================================
   // BOTÓ ENRERE DEL MÒBIL
@@ -113,6 +113,7 @@ function CPresC() {
     };
     fetchCompteC();
   }, [empresa]);
+  /*
   // ==========================================================
   // LLEGIR MOVSG
   // ==========================================================
@@ -235,6 +236,7 @@ function CPresC() {
     };
     fetchMoviments();
   }, [empresa, any, mesd, mesa]);
+  */
   // ==========================================================
   // LLEGIR PRESSUPOST  //
   // Aquest useEffect depèn de:  //
@@ -445,7 +447,7 @@ function CPresC() {
       exportarPDF(pdfRef.current,"Pla_comptes_" + datae2);
     };
   function Sacabat() {
-    navigate("/CMenu");
+    navigate("/CPresG");
   }
 
   // --------------------- return ----------
@@ -541,7 +543,7 @@ function CPresC() {
                         <tr>
                           <th> Compte </th>
                           <th> Nom compte </th>
-                          <th> real/press.</th>
+                      
                           {Number(mesd)<=1 && Number(mesa)>=1 && (<th className="text-end">Gen</th>)}
                           {Number(mesd)<=2 && Number(mesa)>=2 && (<th className="text-end">Feb</th>)}
                           {Number(mesd)<=3 && Number(mesa)>=3 && (<th className="text-end">Mar</th>)}
@@ -595,10 +597,10 @@ function CPresC() {
                                     style={rowStyle }>
                                     <td>{item.P02}</td>
                                     <td>{item.D04N}</td>
-                                    <td>Press.</td>
+                                   
                                 
-                                    {Array.from({ length: 13 }, (_, i) =>
-                                    (Number(mesd-1) <= i && Number(mesa-1) >= i) || i===12 ? (
+                                    {Array.from({ length: 13 }, (_, i) => 
+                                  
                                     <td key={i} className="text-end"
                                       style={i === 12? {
                                            backgroundColor: "#e2e8f0",
@@ -609,84 +611,10 @@ function CPresC() {
                                       >
                                       {Number(item[`P${11 + i}`] || 0).toLocaleString("ca-ES")}
                                     </td>
-                                    ) : null
-                                   )}                               
+                                   
+                                  )}                               
                                   </tr>                                
-                                  {/* ==================================
-                                      REAL
-                                  =================================== */}
-                                  <tr style={rowStyle}>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Real</td>
-
-                                    {Array.from({length: 13}, (_, i) =>
-                                         (Number(mesd-1) <= i && Number(mesa-1) >= i) || i===12 ? (
-                                        <td  key={i} className="text-end"
-                                             style={i === 12 ? {
-                                                  backgroundColor:"#e2e8f0",
-                                                  fontWeight: "700",
-                                                  borderLeft: "2px solid #94a3b8"
-                                                }
-                                              : {}
-                                            }>
-                                          {Number(
-                                            item[`R${11 + i}`] || 0).toLocaleString("ca-ES"
-                                          )}
-                                        </td>
-                                      ) : null
-                                    )}
-                                    
-                                  </tr>
-                                  {/* ==================================
-                                      DIFERÈNCIA
-                                  =================================== */}
-                                  <tr
-                                    style={rowStyle}>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Dif.</td>
-                                    {Array.from({length: 13},(_, i) => {
-                                        const pressupost = Number(item[`P${11 + i}`] || 0);
-                                        const real =       Number(item[`R${11 + i}`] || 0);
-                                        const diferencia = real - pressupost;
-                                    
-                                        return (
-                                           (Number(mesd-1) <= i && Number(mesa-1) >= i) || i===12 ? (
-                                          <td  key={i} className="text-end"
-                                            style={{
-                                              color:diferencia >0? "green"
-                                                  : diferencia <0? "red"
-                                                  : "inherit",
-                                              ...(i ===   12? {
-                                                    backgroundColor: "#e2e8f0",
-                                                    fontWeight:"700",
-                                                    borderLeft:"2px solid #94a3b8"
-                                                  }
-                                                : {})
-                                            }}
-                                          >
-                                            {diferencia.toLocaleString("ca-ES")}
-                                          </td>
-                                        ) : null
-                                    )}
-                                    )}
-                                
-                                  </tr>
-
-                                  {/* ==================================
-                                      SEPARACIÓ
-                                  =================================== */}
-                                  <tr>
-                                    <td colSpan={16}
-                                        style={{
-                                         height:"10px",
-                                         padding:0,
-                                         border:"none",
-                                         backgroundColor:"#f2dcdc"
-                                        }}
-                                    />
-                                  </tr>
+                 
                                   {/* ==================================
                                       LÍNIA SUBTOTAL
                                   =================================== */}

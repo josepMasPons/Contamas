@@ -414,23 +414,7 @@ function Pinici({ canviarPantalla }) {
                             Permisos
                            </Nav.Link>
                                 )}
-                          {/*}
-                        {adminFam === 'Si' && (     
-                          <Nav.Link
-                              onClick={() => navigate("/CVisites")}
-                              className="border rounded"
-                             style={{
-                              padding: "2px 2px",
-                              fontSize: "11px",
-                              borderRadius: "10px",
-                              backgroundColor: "red",
-                              whiteSpace: "nowrap"  ,  
-                              textAlign: "center"
-                            }}>
-                            Últims moviments
-                          </Nav.Link>                 
-                        )}
-                          */}
+         
                         {nivell === '1' && (
                           <Nav.Link
                              onClick={() => navigate("/CBackup")}
@@ -502,8 +486,8 @@ function Pinici({ canviarPantalla }) {
                   margin: "2px 0",
                   backgroundColor: "rgba(255,255,255,0.2)"
                   }}>                    
-                <h2 className="PP01-link2c">Gestió comptable</h2>
-                <h2 className="PP01-link2b">versió família Mas-Altimis</h2> 
+                <h2 className="PP01-link2f">Gestió comptable</h2>
+                <h2 className="PP01-link2b">Multifamiliar, pensada per l'economia domèstica</h2> 
               </div>  
    
           </header> 
@@ -614,8 +598,8 @@ function Pinici({ canviarPantalla }) {
                        rel="noopener noreferrer">  
                        {Versio03} 
                    </a>                    
-                       <h3 className='PP01-link2d'>( {Versio01} {Versio02})</h3> 
-            
+                       <h3 className='PP01-link2d'> {Versio01}</h3> 
+                       <h3 className='PP01-link2d'> {Versio02}</h3> 
                </header>               
            </div>          
       </div> 

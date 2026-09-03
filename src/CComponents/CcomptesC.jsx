@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Navbar, Container, Row, Col,Nav, Card, Form, Button } from "react-bootstrap";
 import { storageCar, db } from '../firebaseLoc.js';
 import { doc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import "./Ccomptes.css";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 function CcomptesC() {
+ // const {pr} = useParams();
   const navigate=useNavigate();
-
+  //console.log('use state - ',localStorage.getItem('CcomptesC'))
+  const prC = (localStorage.getItem('CcomptesC'));
+  const prG2  = (localStorage.getItem('CcomptesG'));
+   
+  console.log('prg2 -' , localStorage.getItem('CcomptesC'))
+  console.log('prC -' , localStorage.getItem('CcomptesG'))
   const [showAvis, setShowAvis] = useState(0);
   const [grupC, setGrupC] = useState([]); 
   const [compteC, setCompteC] = useState([]); 
@@ -22,7 +30,8 @@ function CcomptesC() {
   const [codiGrup, setCodiGrup] = useState('');
   const [nomGrup, setNomGrup] = useState('');
   const [nomCompteC, setNomCompteC] = useState('');
-  const [nomCompteD, setNomCompteD] = useState('');  
+  const [nomCompteD, setNomCompteD] = useState(''); 
+  const [priveg, setPriveg] = useState(true); 
   
   const [tipus, setTipus] = useState('');
   const [notesD, setNotesD] = useState('');
@@ -35,28 +44,63 @@ function CcomptesC() {
                           = useState(localStorage.getItem('AdminFam') || ''); 
 
   const [logoR, setLogoR] = useState('');
-   // useEffect per anular buto retorn mòbil *********************
-   useEffect(() => {
-    const anularReturn = (event) => {
-      event.preventDefault();
-    // 1.- evita que el butó enrera et tregui de l'aplicació
-      if (window.history.state && window.history.state.preventExit) {
-          navigate(0);
-      }
-    }
-    // 2.- afageix un estat al historial per no surtir directament
-    window.history.pushState({preventExit: true},'');
-    // 3.- Gestiona events del butó enrera
-    window.addEventListener('popstate',anularReturn);
-    // 4.- Neteja 
-    return () => {
-        window.removeEventListener('popstate',anularReturn);
-        window.history.replaceState(null,'');
-    }
-   }, [navigate]);
- // useEffect per anular buto retorn mòbil *********************
 
- 
+  const ajudaTipus = (
+  <Popover id="popover-tipus">
+    <Popover.Header as="h3">Tipus</Popover.Header>
+    <Popover.Body>
+      <div><strong>A</strong> = Actiu</div>
+      <div><strong>P</strong> = Passiu</div>
+      <div><strong>I</strong> = Ingrés</div>
+      <div><strong>D</strong> = Despesa</div>
+    </Popover.Body>
+  </Popover>
+  );
+  const ajudaD= (
+  <Popover id="popover-tipus">
+    <Popover.Header as="h3">Selecció DEURE</Popover.Header>
+    <Popover.Body>
+      <div><strong>I</strong> = Ingrés</div>
+      <div><strong>T</strong> = Traspàs</div>
+      <div><strong>F</strong> = Càrrecs/fres.</div>
+      <div><strong>A</strong> = Tot</div>
+      <div><strong>X</strong> = Aper./Tanc.</div>
+    </Popover.Body>
+  </Popover>
+    );
+const ajudaH= (
+  <Popover id="popover-tipus">
+    <Popover.Header as="h3">Selecció HAVER</Popover.Header>
+    <Popover.Body>
+      <div><strong>I</strong> = Ingrés</div>
+      <div><strong>T</strong> = Traspàs</div>
+      <div><strong>F</strong> = Càrrecs/fres.</div>
+      <div><strong>A</strong> = Tot</div>
+      <div><strong>X</strong> = Aper./Tanc.</div>
+    </Popover.Body>
+  </Popover>
+);
+
+   // programa standard per buto triangle android ---------------
+  const programa = 'Cmenu_Inici.jsx';   
+  useEffect(() => {
+  const handleBack = () => {
+    Sacabat();
+
+    // Manté la pàgina dins de l'historial
+    window.history.pushState(null, "", window.location.href);
+  };
+
+  // Creem una entrada inicial
+  window.history.pushState(null, "", window.location.href);
+
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, []);
+// final programa standard ---------------------------------
    
   async function Validar()  {
    if (codiCompteC !== '' && nomCompteC !== '' && codiGrup !== '') {
@@ -79,9 +123,9 @@ function CcomptesC() {
          return;
     }   
      setShowAvis(prev => 1 - prev); 
-      setNomGrup('');
-      setCodiGrup('');
-      setTipus('');
+     // setNomGrup('');
+      //setCodiGrup('');
+      //setTipus('');
       setNomCompteC('');  
       setDeureE('');
       setHaverE('');
@@ -90,7 +134,11 @@ function CcomptesC() {
   function Sacabat() {     
        navigate('/Ccomptes');
   } 
-  const BuscarGrup = (codi) => {
+  
+  useEffect(() => {
+    console.log('prG2 i grupc - ', prG2, grupC)
+
+    const codi = prG2;  
     const grupTrobat = grupC.find(
         (item) => item.G01 === codi &&
                   item.G00 === empresa
@@ -99,17 +147,11 @@ function CcomptesC() {
         setNomGrup(grupTrobat.G02);
         setCodiGrup(codi)
         setTipus(grupTrobat.G03);
-        setDeureE();
-        setHaverE(haverE);
-      //  console.log('trobat .... ', grupTrobat.G02)
     } else {
         setNomGrup('');
-        setCodiGrup('');
         setTipus('');
-        setDeureE('');
-        setHaverE('');
      }
-  };
+   }, [prG2,grupC]);
  
   const BuscarCompteC = (valor) => {
     const codi = valor.toUpperCase();
@@ -128,7 +170,20 @@ function CcomptesC() {
        setHaverE('');
       }
   };
-  
+  useEffect(() => {
+    if (prC === '*') {return;}
+    setCodiCompteC(prC)
+    const grupTrobat = compteC.find(
+        (item) => item.C01 === prC    && item.C03 === codiGrup
+                                       && item.C00 === empresa
+    );
+    if (grupTrobat) {
+        setNomCompteC(grupTrobat.C02);       
+        setDeureE(grupTrobat.C51)
+        setHaverE(grupTrobat.C52);
+    }
+       setPriveg(false);
+    }, [prC, compteC, empresa]);
    //   *********  llegir grupC  i posarho a taula grupC ******
   useEffect(() => {
       const fetchData1 = async () => {
@@ -221,7 +276,7 @@ function CcomptesC() {
       </div>
     </Card.Header>
     <Row className="justify-content-center">
-       <Col lg={4} xl={4}>
+       <Col lg={7} xl={4}>
           <Card className="shadow border-0 rounded-4">
             <Card.Body className="p-5"> 
     {/*    GRUPC **************************** */}        
@@ -232,31 +287,20 @@ function CcomptesC() {
                 className="fw-semibold mb-0"
                 style={{ fontSize: "0.95rem" }}
             >
-                Grup
+                Grup    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </Form.Label>  
             <div  className="d-flex align-items-center gap-3 mb-3">    
-            <Form.Select 
-                  type="text" 
-                  value={codiGrup}              
-                  onChange={(e) => BuscarGrup(e.target.value)}
+              <Form.Label
                   className="py-1 rounded-3 fw-bold"
                   style={{
                    width: "70px",
-                  fontSize: "0.9rem"
+                  fontSize: "0.95rem"
                   }}
-                  required> 
-                <option value="">📋Sel.</option>         
-                {grupC?.map((item) => (
-                     <option key={item.G01} value={item.G01}>
-                        {`${item.G01} - ${item.G02}`}
-                     </option>    
-             ))}
-            </Form.Select> 
+                > 
+                 {codiGrup} 
+            </Form.Label> 
                       
-            <Form.Control
-                 type="text"
-                 value={nomGrup}
-                  readOnly
+            <Form.Label
                   className="py-2 rounded-3 fw-bold"
                   style={{
                     width: "150px",
@@ -265,21 +309,25 @@ function CcomptesC() {
                      border: "1px solid #b6c2d1",
                    color: "#334155"
                    }}
-           />
-             {/* TIPUS */}
-                      <Form.Control
-                         type="text"
-                         value={tipus}
-                         readOnly
-                        className="py-2 rounded-3 text-center fw-bold"
-                        style={{
-                             width: "50px",
-                             fontSize: "0.95rem",
-                             backgroundColor: "#e7dfbb",
-                             border: "1px solid #b6c2d1",
-                             color: "#334155"
-                         }}
-                         />          
+              >{nomGrup}
+            </Form.Label>
+            <OverlayTrigger
+              trigger={['hover', 'focus']}
+               placement="right"
+                overlay={ajudaTipus}
+            >
+              <Form.Label
+                 className="py-2 rounded-3 text-center fw-bold"
+                 style={{
+                    width: "50px",
+                    fontSize: "0.95rem",
+                    backgroundColor: "#e7dfbb",
+                    border: "1px solid #b6c2d1",
+                    color: "#334155"
+                 }}
+              >{tipus}
+              </Form.Label>   
+            </OverlayTrigger>       
            </div>
       </div>
     </Form.Group>
@@ -325,11 +373,19 @@ function CcomptesC() {
     <Form onSubmit={(e) => e.preventDefault()}>
        <Form.Group className="mb-4">     
         <div className="d-flex align-items-center gap-3 mb-3">
-            <Form.Label
+                  <Form.Label
                 className="fw-semibold mb-0"
-                style={{ fontSize: "0.95rem" }}            >
-                grup entrada   -
-            </Form.Label>
+                style={{ fontSize: "0.95rem" }}
+            >  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </Form.Label>  
+               <OverlayTrigger
+              trigger={['hover', 'focus']}
+               placement="right"
+                overlay={ajudaD}
+            >
              <Form.Control
                  type="text"
                  value={deureE}
@@ -342,7 +398,13 @@ function CcomptesC() {
                        border: "1px solid #b6c2d1",
                      color: "#334155"
                       }}
-             /> 
+             />              
+            </OverlayTrigger>
+            <OverlayTrigger
+              trigger={['hover', 'focus']}
+               placement="right"
+                overlay={ajudaH}
+            >
              <Form.Control
                  type="text"
                  value={haverE}
@@ -355,7 +417,8 @@ function CcomptesC() {
                        border: "1px solid #b6c2d1",
                      color: "#334155"
                       }}
-            />                                  
+            /> 
+            </OverlayTrigger>                                
         </div>
        </Form.Group>
     </Form>

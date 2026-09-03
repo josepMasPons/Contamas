@@ -1,0 +1,31 @@
+  // ==========================================================
+  //
+  //     Paràgfaf per controlar el
+  //      BOTÓ ENRERE DEL MÒBIL  (deriva el butó a Sacabat)  
+  //       (versió 03-09-2026)
+  //
+  // ==========================================================
+  // Paràgraf per butó Benrera  ---------------
+    const programa = 'Cmenu_Inici.jsx';   
+    useEffect(() => {
+    const handleBack = () => {
+      Sacabat();
+  
+      // Manté la pàgina dins de l'historial
+      window.history.pushState(null, "", window.location.href);
+    };
+  
+    // Creem una entrada inicial
+    window.history.pushState(null, "", window.location.href);
+  
+    window.addEventListener("popstate", handleBack);
+  
+    return () => {
+      window.removeEventListener("popstate", handleBack);
+    };
+  }, []);
+  // final  paràgraf  Benrera--------------------------------
+
+  // ==========================================================
+  // FÍ BOTÓ ENRERE DEL MÒBIL
+  // ==========================================================

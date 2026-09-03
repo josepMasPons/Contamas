@@ -83,7 +83,26 @@ export default function Canalis() {
     fontWeight: "600",
     marginBottom: "15px"
   };
-
+  // programa standard per buto triangle android ---------------
+      const programa = 'Cmenu_Inici.jsx';   
+      useEffect(() => {
+      const handleBack = () => {
+        Sacabat();
+    
+        // Manté la pàgina dins de l'historial
+        window.history.pushState(null, "", window.location.href);
+      };
+    
+      // Creem una entrada inicial
+      window.history.pushState(null, "", window.location.href);
+    
+      window.addEventListener("popstate", handleBack);
+    
+      return () => {
+        window.removeEventListener("popstate", handleBack);
+      };
+    }, []);
+    // final programa standard ---------------------------------
   function Sacabat() {
     navigate("/CMenu");
   }

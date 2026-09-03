@@ -5,12 +5,14 @@ import { emoji } from "./emoji";
 
   const Versio = () => {
     const navigate=useNavigate();
-    let Versio01 = emoji.grup + 'Contamas/ Versió 2.10  versió beta amb pressupost';
-    let Versio02 = emoji.rellotge + '07-2026';
+    const dataM = new Date();
+    let Versio01 = emoji.grup + 'Contamas/ Versió 2.30  versió beta amb pressupost';
+    let Versio02 = emoji.rellotge + 
+                `${dataM.getDate()}/${dataM.getMonth()+1}/${dataM.getFullYear()}`;
     let Versio03 = emoji.usuari + 'Copyright 2026 Jmas  /  http://www.josepmaspons.cat';
     let Versio04 = '---------------------------- ';
     let Versio05 = emoji.notificacio + 'Gestió comptes  ';
-    let Versio06 = '------------------------------ '; 
+    let Versio06 = '------ amb Gestió Enrera ----------------------- '; 
     localStorage.setItem('Versio01', Versio01);
     localStorage.setItem('Versio02', Versio02);
     localStorage.setItem('Versio03', Versio03);

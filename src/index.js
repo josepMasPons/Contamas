@@ -19,6 +19,7 @@ import Cmovs    from './CComponents/Cmovs';
 import CmovsC    from './CComponents/CmovsC';
 import CPresG    from './CComponents/CPresG';
 import CPresC    from './CComponents/CPresC';
+import CPresB    from './CComponents/CPresB';
 import CmovsCB    from './CComponents/CmovsCB';
 import Canalis    from './CComponents/Canalis'; 
 
@@ -50,12 +51,14 @@ root.render(
         <Route path='/CPercon'           element={<CPercon/>} /> 
         <Route path='/CMenu'             element={<CMenu/>} /> 
         <Route path='/Ccomptes'          element={<Ccomptes/>} /> 
-        <Route path='/CcomptesG'          element={<CcomptesG/>} /> 
-        <Route path='/CcomptesC'          element={<CcomptesC/>} /> 
+        <Route path="/CcomptesG"     element={<CcomptesG />} />
+      
+        <Route path='/CcomptesC'     element={<CcomptesC/>} /> 
         <Route path='/CconsultaCB'       element={<CconsultaCB/>} /> 
          <Route path='/Cmovs'            element={<Cmovs/>} /> 
          <Route path='/CPresG'            element={<CPresG/>} />
          <Route path='/CPresC'            element={<CPresC/>} />
+         <Route path='/CPresB'            element={<CPresB/>} />
          <Route path='/CmovsC'            element={<CmovsC/>} /> 
         <Route path='/CmovsCB'           element={<CmovsCB/>} /> 
 

@@ -228,7 +228,7 @@ useEffect(() => {
 
  } 
   function Consulta() {     
-       navigate('/CPresC');
+       navigate('/CPresB');
   } 
  
   async function Validar()  {

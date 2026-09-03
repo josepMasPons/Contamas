@@ -32,25 +32,26 @@ function CconsultaCB() {
   const currentItems=data.slice(0, itemsPerPage);
   const emptyRows = itemsPerPage - currentItems.length;
   const paddedItems = [...currentItems, ...Array(emptyRows).fill({ temp: '.', nom: ' ', codi: 'empty' })];
- // useEffect per anular buto retorn mòbil *********************
- useEffect(() => {
-      const anularReturn = (event) => {
-        event.preventDefault();
-      // 1.- evita que el butó enrera et tregui de l'aplicació
-        if (window.history.state && window.history.state.preventExit) {
-            navigate(0);
-        }
-      }
-      // 2.- afageix un estat al historial per no surtir directament
-      window.history.pushState({preventExit: true},'');
-      // 3.- Gestiona events del butó enrera
-      window.addEventListener('popstate',anularReturn);
-      // 4.- Neteja 
-      return () => {
-          window.removeEventListener('popstate',anularReturn);
-          window.history.replaceState(null,'');
-      }
-     }, [navigate]);
+ // programa standard per buto triangle android ---------------
+  const programa = 'Cmenu_Inici.jsx';   
+  useEffect(() => {
+  const handleBack = () => {
+    Sacabat();
+
+    // Manté la pàgina dins de l'historial
+    window.history.pushState(null, "", window.location.href);
+  };
+
+  // Creem una entrada inicial
+  window.history.pushState(null, "", window.location.href);
+
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, []);
+// final programa standard ---------------------------------
   
  useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +74,7 @@ function CconsultaCB() {
         
           D03N: grup? `${grup?.G02 || ''}` : '',
           D04N: grup2? `${grup2?.C02 || ''}` : '', 
+          G03: grup? `${grup?.G03 || ''}` : '', 
         };
       });
  
@@ -186,8 +188,6 @@ function CconsultaCB() {
   };
   generar();
 };
-
-
 function Sacabat() {  
       navigate('/Ccomptes');
       }   
@@ -243,7 +243,7 @@ return (
         
               </div>
    </Card.Header>
-  <Container className="P02B_my-mt5">
+  <Container className="mt-3">
     <div ref={pdfRef}>
     <Row className="P02B_my-justify-center">
       <Col md={8}>
@@ -263,6 +263,7 @@ return (
     >
       <thead>
         <tr>
+          <th className="text-secondary small">A/P/I/D</th>
           <th className="text-secondary small">Grup</th>
           <th className="text-secondary small">Nom grup</th>
           <th className="text-secondary small">Compte</th>
@@ -298,6 +299,9 @@ return (
                   transition: "all 0.2s ease",
                 }}
               >
+                 <td className="fw-semibold text-dark">
+                  {showGroup ? item.G03 : ""}
+                </td>
                 {/* Grup */}
                 <td className="fw-semibold text-dark">
                   {showGroup ? item.D03 : ""}

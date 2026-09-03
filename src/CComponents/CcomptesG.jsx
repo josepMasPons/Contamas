@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Navbar, Container, Row, Col,Nav, Card, Form, Button } from "react-bootstrap";
 import { storageCar, db } from '../firebaseLoc.js';
 import { doc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import "./Ccomptes.css";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 function CcomptesG() {
+  const [pr, setPr] = useState(localStorage.getItem('CcomptesG'));   
+  //const {pr} = useParams();
+   // console.log(pr); //  
   const navigate=useNavigate();
-
   const [showAvis, setShowAvis] = useState(0);
   const [grupC, setGrupC] = useState([]); 
   const [compteC, setCompteC] = useState([]); 
@@ -23,9 +27,22 @@ function CcomptesG() {
   const [nomGrup, setNomGrup] = useState('');
   const [nomCompteC, setNomCompteC] = useState('');
   const [nomCompteD, setNomCompteD] = useState('');  
-  
+  const [priveg, setPriveg] = useState(true);
   const [tipus, setTipus] = useState('');
   const [notesD, setNotesD] = useState('');
+
+
+  const ajudaTipus = (
+  <Popover id="popover-tipus">
+    <Popover.Header as="h3">Tipus</Popover.Header>
+    <Popover.Body>
+      <div><strong>A</strong> = Actiu</div>
+      <div><strong>P</strong> = Passiu</div>
+      <div><strong>I</strong> = Ingrés</div>
+      <div><strong>D</strong> = Despesa</div>
+    </Popover.Body>
+  </Popover>
+);
  
 
   const [nomJ, setNomJ] = useState(localStorage.getItem('NomJ') || '');
@@ -35,33 +52,32 @@ function CcomptesG() {
                           = useState(localStorage.getItem('AdminFam') || ''); 
 
   const [logoR, setLogoR] = useState('');
-   // useEffect per anular buto retorn mòbil *********************
-   useEffect(() => {
-    const anularReturn = (event) => {
-      event.preventDefault();
-    // 1.- evita que el butó enrera et tregui de l'aplicació
-      if (window.history.state && window.history.state.preventExit) {
-          navigate(0);
-      }
-    }
-    // 2.- afageix un estat al historial per no surtir directament
-    window.history.pushState({preventExit: true},'');
-    // 3.- Gestiona events del butó enrera
-    window.addEventListener('popstate',anularReturn);
-    // 4.- Neteja 
-    return () => {
-        window.removeEventListener('popstate',anularReturn);
-        window.history.replaceState(null,'');
-    }
-   }, [navigate]);
- // useEffect per anular buto retorn mòbil *********************
+  // programa standard per buto triangle android ---------------
+  const programa = 'Cmenu_Inici.jsx';
+     
+  useEffect(() => {
+  const handleBack = () => {
+    Sacabat();
 
+    // Manté la pàgina dins de l'historial
+    window.history.pushState(null, "", window.location.href);
+  };
+
+  // Creem una entrada inicial
+  window.history.pushState(null, "", window.location.href);
+
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, []);
+// final programa standard ---------------------------------
  
-   
   async function Validar()  {
     if (codiGrup !== '' && nomGrup !== '' && tipus !== '') {
         //console.log('Grabar GrupC - ',codiGrup , ' - ', nomGrup , ' - ',tipus);
-        const docRef1 = doc(db, 'GrupC', 'GC_' + codiGrup);
+        const docRef1 = doc(db, 'GrupC',empresa + '_' + codiGrup);
         try {
             await setDoc(docRef1, {
                 G00:    empresa,
@@ -76,7 +92,14 @@ function CcomptesG() {
         
         return;
       }
-       setShowAvis(prev => 1 - prev);      
+       setShowAvis(prev => 1 - prev);
+       if (pr === '*') {
+          setCodiGrup('');
+          setNomGrup('');
+          setTipus('');
+       } else {
+          navigate('/Ccomptes');
+       }       
     }
   function Sacabat() {     
        navigate('/Ccomptes');
@@ -97,6 +120,23 @@ function CcomptesG() {
      }
   };
  
+ useEffect(() => {
+  if (pr === '*') {return;}
+  const grupTrobat = grupC.find(        
+        (item) => item.G01 === pr  &&
+                  item.G00 === empresa
+    );
+    if (grupTrobat) {
+        setCodiGrup(pr);
+        setNomGrup(grupTrobat.G02);
+        setTipus(grupTrobat.G03);
+    } else {
+        setNomGrup('');
+        setTipus('');
+     }
+     setPriveg(false);
+  }, [pr, grupC, empresa]);
+  
    //   *********  llegir grupC  i posarho a taula grupC ******
   useEffect(() => {
       const fetchData1 = async () => {
@@ -207,8 +247,13 @@ function CcomptesG() {
                    color: "#334155"
               }}
            />
-       {/* TIPUS */}
-           <Form.Control
+
+        <OverlayTrigger
+              trigger={['hover', 'focus']}
+               placement="right"
+                overlay={ajudaTipus}
+        >
+         <Form.Control
               type="text"
               value={tipus}
               maxLength={1}
@@ -226,7 +271,8 @@ function CcomptesG() {
                   border: "1px solid #b6c2d1",
                   color: "#334155"
               }}
-              />          
+              /> 
+            </OverlayTrigger>         
         </div>
     </Form.Group>
     </Form>  
@@ -248,7 +294,7 @@ function CcomptesG() {
                           variant="primary"
                           size='sm'                      
                           onClick={Validar}>                             
-                          <i className="fas fa-sign-out-alt"></i>  Validar
+                            Validar
                       </Button> 
                  
        </div>               

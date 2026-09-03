@@ -32,25 +32,26 @@ function CconsultaCB() {
   const emptyRows = itemsPerPage - currentItems.length;
   const paddedItems = [...currentItems, ...Array(emptyRows).fill({ temp: '.', nom: ' ', codi: 'empty' })];
  
-  // useEffect per anular buto retorn mòbil *********************
- useEffect(() => {
-      const anularReturn = (event) => {
-        event.preventDefault();
-      // 1.- evita que el butó enrera et tregui de l'aplicació
-        if (window.history.state && window.history.state.preventExit) {
-            navigate(0);
-        }
-      }
-      // 2.- afageix un estat al historial per no surtir directament
-      window.history.pushState({preventExit: true},'');
-      // 3.- Gestiona events del butó enrera
-      window.addEventListener('popstate',anularReturn);
-      // 4.- Neteja 
-      return () => {
-          window.removeEventListener('popstate',anularReturn);
-          window.history.replaceState(null,'');
-      }
-     }, [navigate]);
+// programa standard per buto triangle android ---------------
+    const programa = 'Cmenu_Inici.jsx';   
+    useEffect(() => {
+    const handleBack = () => {
+      Sacabat();
+  
+      // Manté la pàgina dins de l'historial
+      window.history.pushState(null, "", window.location.href);
+    };
+  
+    // Creem una entrada inicial
+    window.history.pushState(null, "", window.location.href);
+  
+    window.addEventListener("popstate", handleBack);
+  
+    return () => {
+      window.removeEventListener("popstate", handleBack);
+    };
+  }, []);
+  // final programa standard ---------------------------------
   
  //   *********  llegir grupC  i posarho a taula grupC ******
   const exportar_a_PDF = async () => {
@@ -217,7 +218,7 @@ function CconsultaCB() {
  
   function Sacabat() {  
       navigate('/CmovsC');
-      }  
+  }  
   const formatValue = (value) => {
   if (value?.toDate) {
     return value.toDate().toLocaleString('ca-ES');

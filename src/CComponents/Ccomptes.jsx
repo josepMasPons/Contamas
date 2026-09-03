@@ -6,6 +6,8 @@ import { doc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase
 import "./Ccomptes.css";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 function Ccomptes() {
   const navigate=useNavigate();
@@ -16,8 +18,9 @@ function Ccomptes() {
   const [loading, setLoading] = useState(true);
   const [codiGrup, setCodiGrup] = useState('');
   const [codiCompteC, setCodiCompteC] = useState('');
-  const [codiCompteD, setCodiCompteD] = useState('');
-
+  const [codiCompteD, setCodiCompteD] = useState('100');
+  const [prE, setPrE] = useState(localStorage.getItem('CcomptesG'));
+  const [prC, setPrC] = useState(localStorage.getItem('CcomptesC'));
 
   const [nomGrup, setNomGrup] = useState('');
   const [nomCompteC, setNomCompteC] = useState('');
@@ -26,8 +29,43 @@ function Ccomptes() {
   const [haverC, setHaverC] = useState('');
   const [notesD, setNotesD] = useState('');
   const [tipus, setTipus] = useState('');
+  const [nivell, setNivell] = useState('0');
  
-
+const ajudaTipus = (
+  <Popover id="popover-tipus">
+    <Popover.Header as="h3">Tipus</Popover.Header>
+    <Popover.Body>
+      <div><strong>A</strong> = Actiu</div>
+      <div><strong>P</strong> = Passiu</div>
+      <div><strong>I</strong> = Ingrés</div>
+      <div><strong>D</strong> = Despesa</div>
+    </Popover.Body>
+  </Popover>
+);
+const ajudaD= (
+  <Popover id="popover-tipus">
+    <Popover.Header as="h3">Selecció DEURE</Popover.Header>
+    <Popover.Body>
+      <div><strong>I</strong> = Ingrés</div>
+      <div><strong>T</strong> = Traspàs</div>
+      <div><strong>F</strong> = Càrrecs/fres.</div>
+      <div><strong>A</strong> = Tot</div>
+      <div><strong>X</strong> = Aper./Tanc.</div>
+    </Popover.Body>
+  </Popover>
+);
+const ajudaH= (
+  <Popover id="popover-tipus">
+    <Popover.Header as="h3">Selecció HAVER</Popover.Header>
+    <Popover.Body>
+      <div><strong>I</strong> = Ingrés</div>
+      <div><strong>T</strong> = Traspàs</div>
+      <div><strong>F</strong> = Càrrecs/fres.</div>
+      <div><strong>A</strong> = Tot</div>
+      <div><strong>X</strong> = Aper./Tanc.</div>
+    </Popover.Body>
+  </Popover>
+);
   const [nomJ, setNomJ] = useState(localStorage.getItem('NomJ') || '');
   const [empresa, setEmpresa] = useState(localStorage.getItem('Empresa'));
   //const [text2, setText2] = useState(localStorage.getItem('Proces052') || '');
@@ -35,26 +73,72 @@ function Ccomptes() {
                           = useState(localStorage.getItem('AdminFam') || ''); 
 
   const [logoR, setLogoR] = useState('');
-   // useEffect per anular buto retorn mòbil *********************
+
    useEffect(() => {
-    const anularReturn = (event) => {
-      event.preventDefault();
-    // 1.- evita que el butó enrera et tregui de l'aplicació
-      if (window.history.state && window.history.state.preventExit) {
-          navigate(0);
-      }
-    }
-    // 2.- afageix un estat al historial per no surtir directament
-    window.history.pushState({preventExit: true},'');
-    // 3.- Gestiona events del butó enrera
-    window.addEventListener('popstate',anularReturn);
-    // 4.- Neteja 
+     //console.log('pre ---',prE)
+      if (prE === '*' || prE === '') {return}
+      setCodiGrup(prE);
+      const grupTrobat = grupC.find(
+        (item) => item.G01 === prE
+    );
+    if (grupTrobat) {
+        setNomGrup(grupTrobat.G02);
+        setTipus(grupTrobat.G03);
+    } else {
+     }
+    // console.log('pre ---',prE)
+    }, [prE,grupC]);
+    
+    useEffect(() => {
+   //   console.log('prC ---',prC)
+      if (prC === '*' || prC === '') {return}
+       if (prC === '*' || prC === '') {return};
+      const [prG2,prC2] = (prC || '').split('.');
+     // const prG2 = '';
+     // const prC2 = '';
+     setCodiCompteC(prC2);
+      const grupTrobat2 = compteC.find(
+        (item) => item.C01 === prC2    && item.C03 === codiGrup
+    );
+    if (grupTrobat2) {
+        setNomCompteC(grupTrobat2.C02); 
+        setDeureC(grupTrobat2.C51);       
+        setHaverC(grupTrobat2.C52); 
+    } 
+    }, [prC,compteC,codiGrup]);
+  
+    useEffect(() => {
+      if (codiGrup === '') {
+        setNivell('0')
+      } else {
+          if (codiCompteC === '') {
+            setNivell('1')           
+          } else {
+            setNivell('2')
+          }
+        }
+    }, [codiGrup,codiCompteC]);
+   
+  // programa standard per buto triangle android ---------------
+    const programa = 'Cmenu_Inici.jsx';   
+    useEffect(() => {
+    const handleBack = () => {
+      Sacabat();
+  
+      // Manté la pàgina dins de l'historial
+      window.history.pushState(null, "", window.location.href);
+    };
+  
+    // Creem una entrada inicial
+    window.history.pushState(null, "", window.location.href);
+  
+    window.addEventListener("popstate", handleBack);
+  
     return () => {
-        window.removeEventListener('popstate',anularReturn);
-        window.history.replaceState(null,'');
-    }
-   }, [navigate]);
- // useEffect per anular buto retorn mòbil *********************
+      window.removeEventListener("popstate", handleBack);
+    };
+  }, []);
+  // final programa standard ---------------------------------
 
  
    
@@ -85,23 +169,35 @@ function Ccomptes() {
    } 
 
   function Sacabat() {  
-       //navigate(-1);   
+       //navigate(-1); 
+        localStorage.setItem('CcomptesG', '');     
+        localStorage.setItem('CcomptesC', '');   
        navigate('/CMenu_Inici');
   } 
   function Consulta() {     
        navigate('/CconsultaCB');
   }  
-  function GrupG() {     
+  function GrupG() {
+       let cdg = codiGrup;
+       if (codiGrup  === '') { cdg = '*'} 
+       localStorage.setItem('CcomptesG', cdg);   
        navigate('/CcomptesG');
   }  
-  function ComptesG() {     
-       navigate('/CcomptesC');
+  function ComptesG() { 
+       let cdg2 = codiCompteC;
+       if (!codiCompteC) {cdg2 = '*'}
+
+     
+       //console.log('codiGrup i codiCompteC - ',codiGrup, ' - ', cdg2 )
+       localStorage.setItem('CcomptesG', codiGrup); 
+       localStorage.setItem('CcomptesC',cdg2);     
+       navigate('/CcomptesC');    
   }   
   const BuscarGrup = (valor) => {
     const codi = valor.toUpperCase();
     setCodiGrup(codi);
     setCodiCompteC('');
-    setCodiCompteD('');
+    setCodiCompteD('100');
     setNomGrup('');
     setTipus('');
     setNomCompteC('');
@@ -119,7 +215,7 @@ function Ccomptes() {
   const BuscarCompteC = (valor) => {
     const codi = valor.toUpperCase();
         setCodiCompteC(codi);
-        setCodiCompteD('');
+        setCodiCompteD('100');
         setNomCompteC('');
         setNomCompteD('');
         setNotesD('');
@@ -127,29 +223,38 @@ function Ccomptes() {
         setHaverC(''); 
     const grupTrobat = compteC.find(
         (item) => item.C01 === codi    && item.C03 === codiGrup
-    );
-    if (grupTrobat) {
-        setNomCompteC(grupTrobat.C02); 
-        setDeureC(grupTrobat.C51);       
-        setHaverC(grupTrobat.C52); 
-    } else {
-        setCodiCompteC(codi);
-        setCodiCompteD('');
-        setNomCompteC('');
-        setNomCompteD('');
-        setNotesD('');
-        setDeureC('');       
-        setHaverC(''); 
-      }
-  };
+        );
+        if (grupTrobat) {
+            setNomCompteC(grupTrobat.C02); 
+            setDeureC(grupTrobat.C51);       
+            setHaverC(grupTrobat.C52); 
+        } else {
+            setCodiCompteC(codi);
+            setCodiCompteD('100');
+            setNomCompteC('');
+            setNomCompteD('');
+            setNotesD('');
+            setDeureC('');       
+           setHaverC(''); 
+         }
+         const grupTrobat2 = compteD.find(
+            (item2) => item2.D01 === codi && item2.D04 === codi
+                                    && item2.D03 === codiGrup
+         );
+
+         if (grupTrobat2) {
+             setNomCompteD(grupTrobat2.D02);  
+            setNotesD(grupTrobat2.D05);   
+            //console.log('nom D --- ',grupTrobat2.D02);  
+          } 
+   
+    };
   const BuscarCompteD = (valor) => {
     const codi = valor.toUpperCase();
     setCodiCompteD(codi);
-    setNomCompteD('');
-    setNotesD('');
     const grupTrobat = compteD.find(
         (item) => item.D01 === codi && item.D04 === codiCompteC
-                                    && item.D03 === codiGrup
+                                    && item.D03 === codiGrup                                   
     );
 
     if (grupTrobat) {
@@ -157,6 +262,8 @@ function Ccomptes() {
         setNotesD(grupTrobat.D05);     
    
     } else {
+        setNomCompteD('');
+        setNotesD('');
         }
   };
    //   *********  llegir grupC  i posarho a taula grupC ******
@@ -218,11 +325,15 @@ useEffect(() => {
     fetchData2();  
 }, []);
    //   *********  llegir  comptaD  i posarho a taula ComptaD ******
-     useEffect(() => { 
+     useEffect(() => {       
       const fetchData3 = async () => {
-        const linksCollection = collection(db, 'CompteD');
-        try {
-          const querySnapshot = await getDocs(linksCollection);
+        try { 
+          const linksCollection = collection(db, 'CompteD');
+          const q = query(
+               linksCollection,
+               where("D00", "==", empresa)
+           );       
+          const querySnapshot = await getDocs(q);
           const linksData = querySnapshot.docs.map(doc => ({
             D00: doc.data().D00,
             D01: doc.data().D01,
@@ -241,6 +352,7 @@ useEffect(() => {
       };
       fetchData3();
     }, [showAvis]);
+
   return (    
     <div>  
      <Card.Header className="d-flex 
@@ -298,78 +410,94 @@ useEffect(() => {
               <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
               <Form.Label
                   className="fw-semibold mb-0"
-                  style={{ fontSize: "0.95rem" }}
+                  style={{ fontSize: "0.60rem" }}
               >
-                Grup.....
+                Grup  
              </Form.Label>  
-       <div className="d-flex flex-wrap align-items-center gap-3 mb-3">  
-            <Form.Select 
+          
+              <Form.Select 
                     type="text" 
                     value={codiGrup}              
                     onChange={(e) => BuscarGrup(e.target.value)}
                     className="py-1 rounded-3 fw-bold"
                     style={{
-                     width: "70px",
+                     width: "75px",
                     fontSize: "0.9rem"
                     }}
-                    required>          
+                    required>   
+                      <option value="">Sel.</option>       
                   {grupC?.map((item) => (
                        <option key={item.G01} value={item.G01}>
                           {`${item.G01} - ${item.G02}`}
                        </option>    
                ))}
-           </Form.Select> 
-           <Form.Control
+              </Form.Select> 
+              <Form.Control
                   type="text"
                    value={nomGrup}
                     readOnly
                     className="py-2 rounded-3 fw-bold"
                     style={{
-                      width: "150px",
-                      fontSize: "0.95rem",
+                      width: "200px",
+                      fontSize: "0.80rem",
                       backgroundColor: "#e7dfbb",
                        border: "1px solid #b6c2d1",
                      color: "#535533"
                      }}
-             />
+              />   
+            <OverlayTrigger
+              trigger={['hover', 'focus']}
+               placement="right"
+                overlay={ajudaTipus}
+            >
               <Form.Control
                            type="text"
                            value={tipus}
                            readOnly
                           className="py-2 rounded-3 text-center fw-bold"
                           style={{
-                               width: "50px",
-                               fontSize: "0.95rem",
+                               width: "48px",
+                               fontSize: "0.80rem",
                                backgroundColor: "#e7dfbb",
                                border: "1px solid #b6c2d1",
                                color: "#334155"
                           }}
-              />                     
-             </div>
-            </div>            
+               />          
+              </OverlayTrigger>                       
+                        <Button className="mb-1" 
+                          variant="primary"
+                          size='sm'                      
+                          onClick={GrupG}>                             
+                           Mod.
+                       </Button>               
+              
+             </div>   
           </Form.Group>
          </Form>      
    {/*    COMPTEC **************************** */} 
-   <Form onSubmit={(e) => e.preventDefault()}>
-    <Form.Group className="mb-4">     
+   
+       {(nivell === '1' || nivell === '2') && (
+        <Form onSubmit={(e) => e.preventDefault()}>
+         <Form.Group className="mb-4">     
    
           <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
             <Form.Label
                 className="fw-semibold mb-0"
-                style={{ fontSize: "0.95rem" }}            >
-                Compte
+                style={{ fontSize: "0.60rem" }}
+                 >
+                cte..
             </Form.Label>
            <Form.Select
               value={codiCompteC || ""}
               onChange={(e) => BuscarCompteC(e.target.value)}
               className="py-1 rounded-3 fw-bold"
               style={{
-                width: "80px",
+                width: "75px",
                 fontSize: "0.9rem"
               }}
               required
               >
-              <option value="">-- Selecciona --</option>
+              <option value="">Sel.</option>
               {compteC
                    ?.filter(item => item.C03 === codiGrup)
                     .map((item) => (
@@ -385,58 +513,73 @@ useEffect(() => {
                  readOnly
                  className="py-2 rounded-3 fw-bold"
                   style={{
-                     width: "260px",
-                      fontSize: "0.95rem",
+                     width: "200px",
+                      fontSize: "0.80rem",
                       backgroundColor: "#aef2c6",
                        border: "1px solid #b6c2d1",
                      color: "#334155"
                       }}
             />  
+        
              
-              <Form.Label
-                className="fw-semibold mb-0"
-                style={{ fontSize: "0.95rem" }} >
-         
-              </Form.Label>             
+              <OverlayTrigger
+              trigger={['hover', 'focus']}
+               placement="right"
+                overlay={ajudaD}
+            >          
               <Form.Control
                  type="text"
                  value={deureC}
                  readOnly
                  className="py-2 rounded-3 fw-bold"
                   style={{
-                     width: "60px",
-                      fontSize: "0.95rem",
+                     width: "48px",
+                      fontSize: "0.80rem",
                       backgroundColor: "#aef2c6",
                        border: "1px solid #b6c2d1",
                      color: "#334155"
                       }}
-              />               
+              />
+              </OverlayTrigger>  
+             <OverlayTrigger
+              trigger={['hover', 'focus']}
+               placement="right"
+                overlay={ajudaH}
+            >                       
               <Form.Control
                  type="text"
                  value={haverC}
                  readOnly
                  className="py-2 rounded-3 fw-bold"
                   style={{
-                     width: "60px",
-                      fontSize: "0.95rem",
+                     width: "48px",
+                      fontSize: "0.80rem",
                       backgroundColor: "#aef2c6",
                        border: "1px solid #b6c2d1",
                      color: "#334155"
                       }}
-            />               
-       
+            />     
+               </OverlayTrigger>            
+                   <Button className="mb-1" 
+                          variant="primary"
+                          size='sm'                      
+                          onClick={ComptesG}>                             
+                        Mod. 
+                   </Button>
         </div>
-       </Form.Group>
-    </Form>
+       </Form.Group>     
+      </Form>
+      )}
     {/*    COMPTED **************************** */} 
+     {( nivell === '2') && (
     <Form onSubmit={(e) => e.preventDefault()}>
     <Form.Group className="mb-4">    
         <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
             <Form.Label
                 className="fw-semibold mb-0"
-                style={{ fontSize: "0.95rem" }}
+                style={{ fontSize: "0.60rem" }}
             >
-                Detall
+                Det.
             </Form.Label>
             <Form.Control
                 type="text"
@@ -460,8 +603,8 @@ useEffect(() => {
             onChange={(e) => setNomCompteD(e.target.value)}
             className="py-2 rounded-3 fw-bold"
             style={{
-                width: "260px",
-                fontSize: "0.95rem",
+                width: "200px",
+                fontSize: "0.80rem",
                  backgroundColor: "#d1fae5",
                 border: "1px solid #b6c2d1",
                 color: "#334155"
@@ -469,42 +612,48 @@ useEffect(() => {
             required
           />
              </div>     
-        <div className="d-flex ">
-          <Form.Control
-            type="text"
-            value={notesD}           
-            placeholder="notes"
-            onChange={(e) => {
-                const valor = e.target.value;
-                setNotesD(valor);
-                }}        
-            className="py-1 rounded-3 text-center fw-bold"
-            style={{
-                width: "300px",
-                fontSize: "0.9rem",
-                backgroundColor: "#d1fae5",
-                border: "1px solid #b6c2d1",
-                color: "#334155"
-            }}
-            required
-          />       
-       </div>          
-       <div className="d-flex justify-content-center mt-4">
-         <div className="px-4 py-2 rounded-4 shadow-sm text-center"
+       
+      <div className="d-flex justify-content-center mt-3">
+  <Form.Control
+    as="textarea"
+    rows={4}
+    value={notesD}
+    placeholder="Notes"
+    onChange={(e) => {
+      const valor = e.target.value;
+      setNotesD(valor);
+    }}
+    className="py-2 rounded-3 fw-bold"
+   style={{
+  width: "300px",
+  height: "120px",
+  fontSize: "0.8rem",
+  backgroundColor: "#d1fae5",
+  border: "1px solid #b6c2d1",
+  color: "#334155",
+  resize: "none",
+  overflowY: "auto",
+  textAlign: "left"
+}}
+
+    required
+  />
+</div>
+       <div className="d-flex justify-content-center mt-3">
+         <div className="px-4 py-2 rounded-2 shadow-sm text-center"
           style={{
             backgroundColor: "#eef2f7",
             border: "1px solid #cbd5e1",
             color: "#1e293b",
-            fontSize: "1rem",
+            fontSize: "0.8rem",
             fontWeight: "600",
-            minWidth: "320px",
+            minWidth: "300px",
             letterSpacing: "0.5px"
           }}
           >
-        <span style={{ color: "#64748b" }}>
+          <span style={{ color: "#64748b" }}>
             Compte:
-        </span>
-      
+        </span>      
         <span style={{ color: "#0f172a" }}>
             {codiGrup}.{codiCompteC}.{codiCompteD}
         </span>
@@ -512,6 +661,7 @@ useEffect(() => {
      </div>
     </Form.Group>
    </Form>
+     )}
   </Card.Body>   
     </Card>
    </Col>
@@ -538,21 +688,8 @@ useEffect(() => {
                           size='sm'                      
                           onClick={Consulta}>                             
                           <i className="fas fa-sign-out-alt"></i>  Consulta 
-                      </Button> 
-                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button className="mb-2" 
-                          variant="primary"
-                          size='sm'                      
-                          onClick={GrupG}>                             
-                          <i className="fas fa-sign-out-alt"></i>  Grup
-                      </Button> 
-                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button className="mb-2" 
-                          variant="primary"
-                          size='sm'                      
-                          onClick={ComptesG}>                             
-                          <i className="fas fa-sign-out-alt"></i>  Comptes 
-                      </Button>             
+                      </Button>  
+                                    
        </div>               
       </div>     
   );
