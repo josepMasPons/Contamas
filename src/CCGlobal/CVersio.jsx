@@ -7,8 +7,11 @@ import { emoji } from "./emoji";
     const navigate=useNavigate();
     const dataM = new Date();
     let Versio01 = emoji.grup + 'Contamas/ Versió 3.1 ';
-    let Versio02 = emoji.rellotge + 
-                `${dataM.getDate()}/${dataM.getMonth()+1}/${dataM.getFullYear()}`;
+ 
+    //let Versio02 = emoji.rellotge + 
+    //            `${dataM.getDate()}/${dataM.getMonth()+1}/${dataM.getFullYear()}`;
+    let Versio02 = emoji.rellotge +
+                `dimarts  - 15/09/2026`;   
     let Versio03 = emoji.usuari + 'Copyright 2026 Jmas  /  http://www.josepmaspons.cat';
     let Versio04 = '---------------------------- ';
     let Versio05 = emoji.notificacio + 'Gestió comptes  ';

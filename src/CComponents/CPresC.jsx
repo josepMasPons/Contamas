@@ -263,7 +263,7 @@ function CPresC() {
               // BUSCAR REAL
               // =================================================
               const movCompte = movMap.get(P02);
-              //console.log("Compte:",P02,"Real:",movCompte);
+              console.log("Compte:",P02,"Real:",movCompte);
               // =================================================
               // RESULTAT FILA
               // =================================================
@@ -381,6 +381,7 @@ function CPresC() {
        // console.log("=================================");
         
         setData(resultat);
+       // console.log('resultat - ',resultat)
         setItemsPerPage(resultat.length);
       } catch (error) {
         console.error("Error llegint PresG:", error);

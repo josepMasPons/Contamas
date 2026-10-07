@@ -1,20 +1,15 @@
 import React, { useEffect, useState,useRef } from 'react';
-
 import logo01 from "../Logos/contamas.png";
 import logo02 from "../Logos/logoV.png";
 import logo03 from "../Logos/sacabat.png";
-
+import { db } from "../firebaseLoc.js";
 import './Cinici.css';
 import Cbuto from './Cbuto.jsx';
 import { Form, Button, Container, Row, Col, Card, Nav, Navbar,
          InputGroup,  
          TabContainer} from "react-bootstrap";
-import { storageCar, db } from '../firebaseLoc.js';
 import { query, where, getDocs, collection } from 'firebase/firestore';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import userEvent from '@testing-library/user-event';
-import { translateText } from "./Ctranslator";
 import Benrera from '../CCGlobal/Benrera.js';
 
 function Pinici({ canviarPantalla }) {
